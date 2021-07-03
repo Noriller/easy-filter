@@ -5,7 +5,7 @@
   "description": "",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint": "eslint --ignore-path .gitignore --fix .",
     "test": "jest --watch --verbose",
     "test:cov": "jest --coverage --silent --watchAll",
     "prepare": "husky install"
