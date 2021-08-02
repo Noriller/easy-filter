@@ -1,6 +1,6 @@
 import { optionsParse } from './optionsParse';
 
-describe('notParse', () => {
+describe('optionsParse', () => {
   describe('without a options keyword', () => {
     const searchWithoutOptions = 'search';
     const emptyParsedOptions = { mode: 'OPTION', string: '' };
