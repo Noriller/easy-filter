@@ -6,9 +6,9 @@ export function notParse(search: string, parsedNot: ParsedPart[] = []) {
     /not\((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*\)/gi;
 
   const notPartsFound =
-    search.match(notPartRegexWithNestedBalancedBrackets) || [];
+    search.match(notPartRegexWithNestedBalancedBrackets) || false;
 
-  if (notPartsFound.length > 0) {
+  if (notPartsFound) {
     const { reducedString, reducedNots } = notPartsFound.reduce(notsReducer, {
       reducedString: search,
       reducedNots: parsedNot,

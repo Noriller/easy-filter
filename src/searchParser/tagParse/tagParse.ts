@@ -13,9 +13,9 @@ export function tagParse(search: string, parsedTag: ParsedPart[] = []) {
   const tagPartRegexAloneBracketQuotes =
     /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\(.*?\)|.*?(?=(\s|$))))/gi;
 
-  const tagPartsFound = search.match(tagPartRegexAloneBracketQuotes) || [];
+  const tagPartsFound = search.match(tagPartRegexAloneBracketQuotes) || false;
 
-  if (tagPartsFound.length > 0) {
+  if (tagPartsFound) {
     const { reducedString, reducedTags } = tagPartsFound.reduce(tagsReducer, {
       reducedString: search,
       reducedTags: parsedTag,
