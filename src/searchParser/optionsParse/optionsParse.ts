@@ -4,7 +4,7 @@ import { cleanString } from '../../utils/cleanString';
 import { middleBetweenBracketsRegex } from '../../utils/regexes';
 
 export function optionsParse(search: string): [string, ParsedPart] {
-  const optionsPartRegex = /(options|option)\(.+?\)/gi;
+  const optionsPartRegex = /\b(options|option)\(.+?\)/gi;
 
   const optionsPartFound = search.match(optionsPartRegex) || [];
 
