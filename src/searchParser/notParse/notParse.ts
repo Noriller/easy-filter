@@ -3,22 +3,32 @@ import { cleanString } from '../../utils/cleanString';
 
 export function notParse(search: string, parsedNot: ParsedPart[] = []) {
   const notPartRegexWithNestedBalancedBrackets =
-    /not\((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*\)/i;
+    /not\((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*\)/gi;
 
-  const [notPartFound] =
+  const notPartsFound =
     search.match(notPartRegexWithNestedBalancedBrackets) || [];
 
-  const notParsed = notPartFound?.slice(4, notPartFound.length - 1);
-
-  if (notParsed) {
-    return notParse(cleanString(search, notPartFound), [
-      ...parsedNot,
-      {
-        string: notParsed,
-        mode: 'NOT',
-      },
-    ]);
+  if (notPartsFound.length > 0) {
+    const { reducedString, reducedNots } = notPartsFound.reduce(notsReducer, {
+      reducedString: search,
+      reducedNots: parsedNot,
+    });
+    return [reducedString, reducedNots];
   } else {
     return [search, parsedNot];
   }
 }
+
+const notsReducer = ({ reducedString, reducedNots }, notPart) => {
+  const notParsed = notPart.slice(4, notPart.length - 1);
+  return {
+    reducedString: cleanString(reducedString, notPart),
+    reducedNots: [
+      ...reducedNots,
+      {
+        string: notParsed,
+        mode: 'NOT',
+      },
+    ],
+  };
+};

@@ -11,23 +11,38 @@ export function tagParse(search: string, parsedTag: ParsedPart[] = []) {
    *  [tag] -> can be any word
    */
   const tagPartRegexAloneBracketQuotes =
-    /(?<=\s?)\S+:((?<quote>["']).*?\k<quote>|\(.*?\)|.*?(?=\s)|.*)/i;
+    /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\(.*?\)|.*?(?=(\s|$))))/gi;
 
-  const [tagPartFound] = search.match(tagPartRegexAloneBracketQuotes) || [];
+  const tagPartsFound = search.match(tagPartRegexAloneBracketQuotes) || [];
 
-  if (tagPartFound) {
-    if (cleanString(tagPartFound).endsWith(':')) {
-      return tagParse(cleanString(search, tagPartFound), parsedTag);
-    } else {
-      return tagParse(cleanString(search, tagPartFound), [
-        ...parsedTag,
-        {
-          string: tagPartFound,
-          mode: 'TAG',
-        },
-      ]);
-    }
+  if (tagPartsFound.length > 0) {
+    const { reducedString, reducedTags } = tagPartsFound.reduce(tagsReducer, {
+      reducedString: search,
+      reducedTags: parsedTag,
+    });
+
+    return [reducedString, reducedTags];
   } else {
     return [search, parsedTag];
   }
 }
+
+const tagsReducer = ({ reducedString, reducedTags }, tagPart) => {
+  if (cleanString(tagPart).endsWith(':')) {
+    return {
+      reducedString: cleanString(reducedString, tagPart),
+      reducedTags: reducedTags,
+    };
+  } else {
+    return {
+      reducedString: cleanString(reducedString, tagPart),
+      reducedTags: [
+        ...reducedTags,
+        {
+          string: tagPart,
+          mode: 'TAG',
+        },
+      ],
+    };
+  }
+};
