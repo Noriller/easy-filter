@@ -1,7 +1,8 @@
-import { ParsedPart } from '../../shared/shapes';
+import { middleBetweenBracketsRegex } from 'src/utils/regexes';
+import { ParsedResult, ParsedTag } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 
-export function tagParse(search: string, parsedTag: ParsedPart[] = []) {
+export function tagParse(search: string): ParsedResult {
   /**
    * This should match:
    *  tag:something
@@ -18,28 +19,48 @@ export function tagParse(search: string, parsedTag: ParsedPart[] = []) {
   if (tagPartsFound) {
     const { reducedString, reducedTags } = tagPartsFound.reduce(tagsReducer, {
       reducedString: search,
-      reducedTags: parsedTag,
+      reducedTags: [],
     });
 
-    return [reducedString, reducedTags];
+    return {
+      search: reducedString,
+      parsedSearch: reducedTags.length > 0 ? reducedTags : null,
+    };
   } else {
-    return [search, parsedTag];
+    return {
+      search,
+      parsedSearch: null,
+    };
   }
 }
 
-const tagsReducer = ({ reducedString, reducedTags }, tagPart) => {
+const tagsReducer = (
+  {
+    reducedString,
+    reducedTags,
+  }: { reducedString: string; reducedTags: ParsedTag[] },
+  tagPart: string,
+): {
+  reducedString: string;
+  reducedTags: ParsedTag[];
+} => {
   if (cleanString(tagPart).endsWith(':')) {
     return {
       reducedString: cleanString(reducedString, tagPart),
       reducedTags: reducedTags,
     };
   } else {
+    const [tag, tagString] = tagPart.split(':');
+    //for this regex to work, you need to use the groups, not the matchs so you cant use [0], but [1]
+    const middleOfBracketsOrItselfRegex = /^\(?(.*?)\)?$/i;
+    const tagPayload = tagString.match(middleOfBracketsOrItselfRegex)[1];
+
     return {
       reducedString: cleanString(reducedString, tagPart),
       reducedTags: [
         ...reducedTags,
         {
-          string: tagPart,
+          payload: { tag, tagPayload },
           mode: 'TAG',
         },
       ],

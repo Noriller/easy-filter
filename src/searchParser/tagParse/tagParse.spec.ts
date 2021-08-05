@@ -1,78 +1,80 @@
-import { ParsedPart } from 'src/shared/shapes';
+import { ParsedTag } from 'src/shared/shapes';
 import { tagParse } from './tagParse';
 
 describe('tagParse', () => {
   describe('without a tag', () => {
     const searchWithoutTag = 'search';
-    const emptyParsedTag = [];
+    const emptyParsedTag = null;
 
     it('should return itself and a empty parsed result', () => {
-      expect(tagParse(searchWithoutTag)).toEqual([
-        searchWithoutTag,
-        emptyParsedTag,
-      ]);
+      expect(tagParse(searchWithoutTag)).toEqual({
+        search: searchWithoutTag,
+        parsedSearch: emptyParsedTag,
+      });
     });
   });
 
   describe('without a proper tag', () => {
     const searchWithIncompleteTagRemoved = 'search with incomplete';
-    const emptyParsedTag = [];
+    const emptyParsedTag = null;
 
     it('should remove a incomplete tag', () => {
       const searchWithIncompleteTag = 'search with incomplete tag:';
-      expect(tagParse(searchWithIncompleteTag)).toEqual([
-        searchWithIncompleteTagRemoved,
-        emptyParsedTag,
-      ]);
+      expect(tagParse(searchWithIncompleteTag)).toEqual({
+        search: searchWithIncompleteTagRemoved,
+        parsedSearch: emptyParsedTag,
+      });
     });
 
     it('should remove a incomplete tag space only', () => {
       const searchWithIncompleteTag = 'search with tag: incomplete';
 
-      expect(tagParse(searchWithIncompleteTag)).toEqual([
-        searchWithIncompleteTagRemoved,
-        emptyParsedTag,
-      ]);
+      expect(tagParse(searchWithIncompleteTag)).toEqual({
+        search: searchWithIncompleteTagRemoved,
+        parsedSearch: emptyParsedTag,
+      });
     });
   });
 
   describe('with single tag', () => {
     const searchWithoutParsedPart = 'search with';
-    const parsedTag: ParsedPart[] = [{ string: 'tag:something', mode: 'TAG' }];
+    const parsedTag: ParsedTag[] = [
+      { payload: { tag: 'tag', tagPayload: 'something' }, mode: 'TAG' },
+    ];
 
     it('should parse a simple tag keyword', () => {
       const searchWithTag = 'search with tag:something';
-      expect(tagParse(searchWithTag)).toEqual([
-        searchWithoutParsedPart,
-        parsedTag,
-      ]);
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
     });
 
-    it('should parse a simple tag in the middle of the string', () => {
+    it('should parse a simple tag in the middle of the payload', () => {
       const searchWithTagInMiddle =
         'search with tag:something and something else';
       const searchWithoutParsedPartInMiddle = 'search with and something else';
 
-      expect(tagParse(searchWithTagInMiddle)).toEqual([
-        searchWithoutParsedPartInMiddle,
-        parsedTag,
-      ]);
+      expect(tagParse(searchWithTagInMiddle)).toEqual({
+        search: searchWithoutParsedPartInMiddle,
+        parsedSearch: parsedTag,
+      });
     });
   });
 
   describe('with multiples tags', () => {
     const searchWithTag = 'search with tag:keyword1 tag:keyword2';
     const searchWithoutParsedPart = 'search with';
-    const parsedTag: ParsedPart[] = [
-      { string: 'tag:keyword1', mode: 'TAG' },
-      { string: 'tag:keyword2', mode: 'TAG' },
+    const parsedTag: ParsedTag[] = [
+      { payload: { tag: 'tag', tagPayload: 'keyword1' }, mode: 'TAG' },
+      { payload: { tag: 'tag', tagPayload: 'keyword2' }, mode: 'TAG' },
     ];
 
     it('should parse multiple tags', () => {
-      expect(tagParse(searchWithTag)).toEqual([
-        searchWithoutParsedPart,
-        parsedTag,
-      ]);
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
     });
   });
 
@@ -80,26 +82,32 @@ describe('tagParse', () => {
     const searchWithoutParsedPart = 'search with';
     it('should parse tag with brackets', () => {
       const searchWithTag = 'search with tag:(keyword1 keyword2)';
-      const parsedTag: ParsedPart[] = [
-        { string: 'tag:(keyword1 keyword2)', mode: 'TAG' },
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: { tag: 'tag', tagPayload: 'keyword1 keyword2' },
+          mode: 'TAG',
+        },
       ];
 
-      expect(tagParse(searchWithTag)).toEqual([
-        searchWithoutParsedPart,
-        parsedTag,
-      ]);
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
     });
 
     it('should parse tag with quotes', () => {
       const searchWithTag = 'search with tag:"keyword1 keyword2"';
-      const parsedTag: ParsedPart[] = [
-        { string: 'tag:"keyword1 keyword2"', mode: 'TAG' },
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: { tag: 'tag', tagPayload: '"keyword1 keyword2"' },
+          mode: 'TAG',
+        },
       ];
 
-      expect(tagParse(searchWithTag)).toEqual([
-        searchWithoutParsedPart,
-        parsedTag,
-      ]);
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
     });
   });
 });
