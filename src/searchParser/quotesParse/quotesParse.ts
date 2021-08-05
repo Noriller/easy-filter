@@ -1,7 +1,7 @@
-import { ParsedPart } from '../../shared/shapes';
+import { ParsedPart, ParsedResult } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 
-export function quotesParse(search: string, parsedQuotes: ParsedPart[] = []) {
+export function quotesParse(search: string): ParsedResult {
   const quotePartRegex = /(?<quotevalue>(?<quote>["']).*?\k<quote>)/gi;
   const tagPartRegexAloneBracketQuotes =
     /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\(.*?\)|.*?(?=(\s|$))))/gi;
@@ -28,22 +28,38 @@ export function quotesParse(search: string, parsedQuotes: ParsedPart[] = []) {
 
     const { reducedString, reducedQuotes } = quotesToUse.reduce(quotesReducer, {
       reducedString: search,
-      reducedQuotes: parsedQuotes,
+      reducedQuotes: [],
     });
-    return [reducedString, reducedQuotes];
+
+    return {
+      search: reducedString,
+      parsedSearch: reducedQuotes,
+    };
   } else {
-    return [search, parsedQuotes];
+    return {
+      search: search,
+      parsedSearch: null,
+    };
   }
 }
 
-const quotesReducer = ({ reducedString, reducedQuotes }, quotePart) => {
+const quotesReducer = (
+  {
+    reducedString,
+    reducedQuotes,
+  }: { reducedString: string; reducedQuotes: ParsedPart[] },
+  quotePart: string,
+): {
+  reducedString: string;
+  reducedQuotes: ParsedPart[];
+} => {
   const quoteParsed = quotePart.slice(1, quotePart.length - 1);
   return {
     reducedString: cleanString(reducedString, quotePart),
     reducedQuotes: [
       ...reducedQuotes,
       {
-        string: quoteParsed,
+        payload: quoteParsed,
         mode: 'QUOTE',
       },
     ],
