@@ -4,38 +4,38 @@ import { notParse } from './notParse';
 describe('notParse', () => {
   describe('without a not keyword', () => {
     const searchWithoutNot = 'search';
-    const emptyParsedNot = [];
+    const emptyParsedNot = null;
 
     it('should return itself and a empty parsed result', () => {
-      expect(notParse(searchWithoutNot)).toEqual([
-        searchWithoutNot,
-        emptyParsedNot,
-      ]);
+      expect(notParse(searchWithoutNot)).toEqual({
+        search: searchWithoutNot,
+        parsedSearch: emptyParsedNot,
+      });
     });
   });
 
   describe('without a proper not keyword', () => {
     const searchWithNotAsValue = 'search with not that isnt a keyword';
-    const emptyParsedNot = [];
+    const emptyParsedNot = null;
 
     it('should not falsely use a word as a keyword', () => {
-      expect(notParse(searchWithNotAsValue)).toEqual([
-        searchWithNotAsValue,
-        emptyParsedNot,
-      ]);
+      expect(notParse(searchWithNotAsValue)).toEqual({
+        search: searchWithNotAsValue,
+        parsedSearch: emptyParsedNot,
+      });
     });
   });
 
   describe('with single not keyword', () => {
     const searchWithNot = 'search with not(keyword)';
     const searchWithoutParsedPart = 'search with';
-    const parsedNot: ParsedPart[] = [{ string: 'keyword', mode: 'NOT' }];
+    const parsedNot: ParsedPart[] = [{ payload: 'keyword', mode: 'NOT' }];
 
     it('should parse a simple NOT keyword', () => {
-      expect(notParse(searchWithNot)).toEqual([
-        searchWithoutParsedPart,
-        parsedNot,
-      ]);
+      expect(notParse(searchWithNot)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedNot,
+      });
     });
 
     it('should parse a simple NOT keyword in the middle of the string', () => {
@@ -43,10 +43,10 @@ describe('notParse', () => {
         'search with not(keyword) and something else';
       const searchWithoutParsedPartInMiddle = 'search with and something else';
 
-      expect(notParse(searchWithNotInMiddle)).toEqual([
-        searchWithoutParsedPartInMiddle,
-        parsedNot,
-      ]);
+      expect(notParse(searchWithNotInMiddle)).toEqual({
+        search: searchWithoutParsedPartInMiddle,
+        parsedSearch: parsedNot,
+      });
     });
 
     describe('with nested brackets', () => {
@@ -54,30 +54,31 @@ describe('notParse', () => {
         const searchWithNestedBrackets =
           'search with not(tag:(nested bracket))';
         const parsedNotWithNestedBrackets: ParsedPart[] = [
-          { string: 'tag:(nested bracket)', mode: 'NOT' },
+          { payload: 'tag:(nested bracket)', mode: 'NOT' },
         ];
 
-        expect(notParse(searchWithNestedBrackets)).toEqual([
-          searchWithoutParsedPart,
-          parsedNotWithNestedBrackets,
-        ]);
+        expect(notParse(searchWithNestedBrackets)).toEqual({
+          search: searchWithoutParsedPart,
+          parsedSearch: parsedNotWithNestedBrackets,
+        });
       });
     });
   });
 
   describe('with multiples not keywords', () => {
-    const searchWithNot = 'search with not(keyword1) not(keyword2)';
     const searchWithoutParsedPart = 'search with';
-    const parsedNot: ParsedPart[] = [
-      { string: 'keyword1', mode: 'NOT' },
-      { string: 'keyword2', mode: 'NOT' },
-    ];
 
     it('should parse multiple NOT keywords', () => {
-      expect(notParse(searchWithNot)).toEqual([
-        searchWithoutParsedPart,
-        parsedNot,
-      ]);
+      const searchWithNot = 'search with not(keyword1) not(keyword2)';
+      const parsedNot: ParsedPart[] = [
+        { payload: 'keyword1', mode: 'NOT' },
+        { payload: 'keyword2', mode: 'NOT' },
+      ];
+
+      expect(notParse(searchWithNot)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedNot,
+      });
     });
   });
 });

@@ -1,4 +1,12 @@
 export interface ParsedPart {
-  string: string;
-  mode: 'NOT' | 'OPTION' | 'QUOTE' | 'TAG' | 'OR';
+  payload: string | RangePayload | DateRangePayload;
+  mode: 'NOT' | 'OPTION' | 'QUOTE' | 'TAG' | 'RANGE' | 'DATE_RANGE' | 'OR';
 }
+
+export interface ParsedResult {
+  search: string;
+  parsedSearch: ParsedPart[];
+}
+
+export type RangePayload = number[];
+export type DateRangePayload = Date[];

@@ -1,7 +1,7 @@
-import { ParsedPart } from '../../shared/shapes';
+import { ParsedPart, ParsedResult } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 
-export function notParse(search: string, parsedNot: ParsedPart[] = []) {
+export function notParse(search: string): ParsedResult {
   const notPartRegexWithNestedBalancedBrackets =
     /not\((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*\)/gi;
 
@@ -11,22 +11,38 @@ export function notParse(search: string, parsedNot: ParsedPart[] = []) {
   if (notPartsFound) {
     const { reducedString, reducedNots } = notPartsFound.reduce(notsReducer, {
       reducedString: search,
-      reducedNots: parsedNot,
+      reducedNots: [],
     });
-    return [reducedString, reducedNots];
+
+    return {
+      search: reducedString,
+      parsedSearch: reducedNots,
+    };
   } else {
-    return [search, parsedNot];
+    return {
+      search,
+      parsedSearch: null,
+    };
   }
 }
 
-const notsReducer = ({ reducedString, reducedNots }, notPart) => {
+const notsReducer = (
+  {
+    reducedString,
+    reducedNots,
+  }: { reducedString: string; reducedNots: ParsedPart[] },
+  notPart: string,
+): {
+  reducedString: string;
+  reducedNots: ParsedPart[];
+} => {
   const notParsed = notPart.slice(4, notPart.length - 1);
   return {
     reducedString: cleanString(reducedString, notPart),
     reducedNots: [
       ...reducedNots,
       {
-        string: notParsed,
+        payload: notParsed,
         mode: 'NOT',
       },
     ],
