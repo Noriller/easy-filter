@@ -8,5 +8,5 @@ export interface ParsedResult {
   parsedSearch: ParsedPart[];
 }
 
-export type RangePayload = number[];
+export type RangePayload = [number, number];
 export type DateRangePayload = Date[];
