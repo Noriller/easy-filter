@@ -9,4 +9,4 @@ export interface ParsedResult {
 }
 
 export type RangePayload = [number, number];
-export type DateRangePayload = Date[];
+export type DateRangePayload = [Date, Date];
