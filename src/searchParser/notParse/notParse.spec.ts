@@ -27,6 +27,19 @@ describe('notParse', () => {
   });
 
   describe('with single not keyword', () => {
+    const searchWithNot = 'search with not()';
+    const searchWithoutParsedPart = 'search with';
+    const parsedNot: ParsedPart[] = null;
+
+    it('should remove a empty NOT', () => {
+      expect(notParse(searchWithNot)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedNot,
+      });
+    });
+  });
+
+  describe('with single not keyword', () => {
     const searchWithNot = 'search with not(keyword)';
     const searchWithoutParsedPart = 'search with';
     const parsedNot: ParsedPart[] = [{ payload: 'keyword', mode: 'NOT' }];

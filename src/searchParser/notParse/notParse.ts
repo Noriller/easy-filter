@@ -16,7 +16,7 @@ export function notParse(search: string): ParsedResult {
 
     return {
       search: reducedString,
-      parsedSearch: reducedNots,
+      parsedSearch: reducedNots.length > 0 ? reducedNots : null,
     };
   } else {
     return {
@@ -37,6 +37,13 @@ const notsReducer = (
   reducedNots: ParsedPart[];
 } => {
   const notParsed = notPart.slice(4, notPart.length - 1);
+  if (notParsed === '') {
+    return {
+      reducedString: cleanString(reducedString, notPart),
+      reducedNots: reducedNots,
+    };
+  }
+
   return {
     reducedString: cleanString(reducedString, notPart),
     reducedNots: [
