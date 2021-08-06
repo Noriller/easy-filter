@@ -1,9 +1,10 @@
+import { ParsedPart } from 'src/shared/shapes';
 import { optionsParse } from './optionsParse';
 
 describe('optionsParse', () => {
   describe('without a options keyword', () => {
     const searchWithoutOptions = 'search';
-    const emptyParsedOptions = null;
+    const emptyParsedOptions: ParsedPart[] = null;
 
     it('should return itself and a empty options result', () => {
       expect(optionsParse(searchWithoutOptions)).toEqual({
@@ -15,7 +16,7 @@ describe('optionsParse', () => {
 
   describe('without a proper option keyword', () => {
     const searchWithOptionAsValue = 'search with option that isnt a keyword';
-    const emptyParsedOptions = null;
+    const emptyParsedOptions: ParsedPart[] = null;
 
     it('should not falsely use a word as a keyword', () => {
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
@@ -29,7 +30,9 @@ describe('optionsParse', () => {
     it('should parse option (singular) keyword', () => {
       const searchWithOptionAsValue = 'search with option(option)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions = [{ mode: 'OPTION', payload: 'option' }];
+      const emptyParsedOptions: ParsedPart[] = [
+        { mode: 'OPTION', payload: 'option' },
+      ];
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionRemoved,
@@ -40,7 +43,9 @@ describe('optionsParse', () => {
     it('should parse options (plural) keyword', () => {
       const searchWithOptionAsValue = 'search with options(option)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions = [{ mode: 'OPTION', payload: 'option' }];
+      const emptyParsedOptions: ParsedPart[] = [
+        { mode: 'OPTION', payload: 'option' },
+      ];
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionRemoved,
@@ -52,7 +57,7 @@ describe('optionsParse', () => {
       const searchWithOptionAsValue =
         'search with options(option1) option(option2 option3)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions = [
+      const emptyParsedOptions: ParsedPart[] = [
         { mode: 'OPTION', payload: 'option1' },
         { mode: 'OPTION', payload: 'option2' },
         { mode: 'OPTION', payload: 'option3' },

@@ -1,3 +1,4 @@
+import { ParsedPart } from 'src/shared/shapes';
 import { orParse } from './orParse';
 
 describe('optionsParse', () => {
@@ -8,21 +9,23 @@ describe('optionsParse', () => {
 
   it('should parse one word', () => {
     const search = 'one';
+    const parsedOr: ParsedPart[] = [{ payload: 'one', mode: 'OR' }];
     expect(orParse(search)).toEqual({
       search: null,
-      parsedSearch: [{ payload: 'one', mode: 'OR' }],
+      parsedSearch: parsedOr,
     });
   });
 
   it('should parse multiple words', () => {
     const search = 'one two three';
+    const parsedOr: ParsedPart[] = [
+      { payload: 'one', mode: 'OR' },
+      { payload: 'two', mode: 'OR' },
+      { payload: 'three', mode: 'OR' },
+    ];
     expect(orParse(search)).toEqual({
       search: null,
-      parsedSearch: [
-        { payload: 'one', mode: 'OR' },
-        { payload: 'two', mode: 'OR' },
-        { payload: 'three', mode: 'OR' },
-      ],
+      parsedSearch: parsedOr,
     });
   });
 });

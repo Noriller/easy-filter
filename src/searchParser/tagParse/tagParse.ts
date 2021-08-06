@@ -1,4 +1,3 @@
-import { middleBetweenBracketsRegex } from 'src/utils/regexes';
 import { ParsedResult, ParsedTag } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 
@@ -60,7 +59,8 @@ const tagsReducer = (
       reducedTags: [
         ...reducedTags,
         {
-          payload: { tag, tagPayload },
+          payload: tagPayload,
+          tag,
           mode: 'TAG',
         },
       ],

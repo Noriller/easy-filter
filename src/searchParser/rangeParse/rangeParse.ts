@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ParsedResult, RangePayload } from 'src/shared/shapes';
+import { ParsedRange, ParsedResult, RangePayload } from 'src/shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 import { middleBetweenBracketsRegex } from '../../utils/regexes';
 
@@ -23,7 +23,9 @@ export function rangeParse(search: string): ParsedResult {
 
     return {
       search: cleanedString,
-      parsedSearch: rangeParsed.map((payload: RangePayload) => ({ payload, mode: 'RANGE' }))
+      parsedSearch: rangeParsed.map((range: RangePayload): ParsedRange =>
+        ({ payload: null, range: range, mode: 'RANGE' })
+      )
     };
   } else {
     return emptyParsedResult(search);

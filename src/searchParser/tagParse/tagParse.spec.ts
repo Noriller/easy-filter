@@ -39,7 +39,7 @@ describe('tagParse', () => {
   describe('with single tag', () => {
     const searchWithoutParsedPart = 'search with';
     const parsedTag: ParsedTag[] = [
-      { payload: { tag: 'tag', tagPayload: 'something' }, mode: 'TAG' },
+      { payload: 'something', tag: 'tag', mode: 'TAG' },
     ];
 
     it('should parse a simple tag keyword', () => {
@@ -66,8 +66,8 @@ describe('tagParse', () => {
     const searchWithTag = 'search with tag:keyword1 tag:keyword2';
     const searchWithoutParsedPart = 'search with';
     const parsedTag: ParsedTag[] = [
-      { payload: { tag: 'tag', tagPayload: 'keyword1' }, mode: 'TAG' },
-      { payload: { tag: 'tag', tagPayload: 'keyword2' }, mode: 'TAG' },
+      { payload: 'keyword1', tag: 'tag', mode: 'TAG' },
+      { payload: 'keyword2', tag: 'tag', mode: 'TAG' },
     ];
 
     it('should parse multiple tags', () => {
@@ -84,7 +84,8 @@ describe('tagParse', () => {
       const searchWithTag = 'search with tag:(keyword1 keyword2)';
       const parsedTag: ParsedTag[] = [
         {
-          payload: { tag: 'tag', tagPayload: 'keyword1 keyword2' },
+          payload: 'keyword1 keyword2',
+          tag: 'tag',
           mode: 'TAG',
         },
       ];
@@ -99,7 +100,8 @@ describe('tagParse', () => {
       const searchWithTag = 'search with tag:"keyword1 keyword2"';
       const parsedTag: ParsedTag[] = [
         {
-          payload: { tag: 'tag', tagPayload: '"keyword1 keyword2"' },
+          payload: '"keyword1 keyword2"',
+          tag: 'tag',
           mode: 'TAG',
         },
       ];

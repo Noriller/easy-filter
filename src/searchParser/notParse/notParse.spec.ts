@@ -4,7 +4,7 @@ import { notParse } from './notParse';
 describe('notParse', () => {
   describe('without a not keyword', () => {
     const searchWithoutNot = 'search';
-    const emptyParsedNot = null;
+    const emptyParsedNot: ParsedPart[] = null;
 
     it('should return itself and a empty parsed result', () => {
       expect(notParse(searchWithoutNot)).toEqual({
@@ -16,7 +16,7 @@ describe('notParse', () => {
 
   describe('without a proper not keyword', () => {
     const searchWithNotAsValue = 'search with not that isnt a keyword';
-    const emptyParsedNot = null;
+    const emptyParsedNot: ParsedPart[] = null;
 
     it('should not falsely use a word as a keyword', () => {
       expect(notParse(searchWithNotAsValue)).toEqual({

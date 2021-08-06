@@ -1,9 +1,10 @@
+import { ParsedRange } from 'src/shared/shapes';
 import { rangeParse } from './rangeParse';
 
 describe('rangeParse', () => {
   describe('without a range keyword', () => {
     const searchWithoutRange = 'search';
-    const emptyParsedRange = null;
+    const emptyParsedRange: ParsedRange[] = null;
 
     it('should return itself and a null parsed result', () => {
       expect(rangeParse(searchWithoutRange)).toEqual({
@@ -15,7 +16,7 @@ describe('rangeParse', () => {
 
   describe('without a proper range keyword', () => {
     const searchWithRangeAsValue = 'search with range that isnt a keyword';
-    const emptyParsedRange = null;
+    const emptyParsedRange: ParsedRange[] = null;
 
     it('should not falsely use a word as a keyword', () => {
       expect(rangeParse(searchWithRangeAsValue)).toEqual({
@@ -29,7 +30,9 @@ describe('rangeParse', () => {
     it('should parse range keyword', () => {
       const searchWithRangeAsValue = 'search with range(1,2)';
       const searchWithRangeRemoved = 'search with';
-      const emptyParsedRange = [{ mode: 'RANGE', payload: [1, 2] }];
+      const emptyParsedRange: ParsedRange[] = [
+        { mode: 'RANGE', payload: null, range: [1, 2] },
+      ];
 
       expect(rangeParse(searchWithRangeAsValue)).toEqual({
         search: searchWithRangeRemoved,
@@ -40,9 +43,9 @@ describe('rangeParse', () => {
     it('should parse multiple range keyword', () => {
       const searchWithRangeAsValue = 'search with range(1,2) range(5,6)';
       const searchWithRangeRemoved = 'search with';
-      const emptyParsedRange = [
-        { mode: 'RANGE', payload: [1, 2] },
-        { mode: 'RANGE', payload: [5, 6] },
+      const emptyParsedRange: ParsedRange[] = [
+        { mode: 'RANGE', payload: null, range: [1, 2] },
+        { mode: 'RANGE', payload: null, range: [5, 6] },
       ];
 
       expect(rangeParse(searchWithRangeAsValue)).toEqual({
@@ -54,9 +57,9 @@ describe('rangeParse', () => {
     it('should ignore more than 2 parameters', () => {
       const searchWithRangeAsValue = 'search with range(1,2,3,4) range(,6,7,8)';
       const searchWithRangeRemoved = 'search with';
-      const emptyParsedRange = [
-        { mode: 'RANGE', payload: [1, 2] },
-        { mode: 'RANGE', payload: [-Infinity, 6] },
+      const emptyParsedRange: ParsedRange[] = [
+        { mode: 'RANGE', payload: null, range: [1, 2] },
+        { mode: 'RANGE', payload: null, range: [-Infinity, 6] },
       ];
 
       expect(rangeParse(searchWithRangeAsValue)).toEqual({
@@ -69,7 +72,9 @@ describe('rangeParse', () => {
       it('should parse when with only one range parameter', () => {
         const searchWithRangeAsValue = 'search with range(1)';
         const searchWithRangeRemoved = 'search with';
-        const emptyParsedRange = [{ mode: 'RANGE', payload: [1, Infinity] }];
+        const emptyParsedRange: ParsedRange[] = [
+          { mode: 'RANGE', payload: null, range: [1, Infinity] },
+        ];
 
         expect(rangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
@@ -79,7 +84,9 @@ describe('rangeParse', () => {
       it('should parse when with one empty range parameter', () => {
         const searchWithRangeAsValue = 'search with range(,1)';
         const searchWithRangeRemoved = 'search with';
-        const emptyParsedRange = [{ mode: 'RANGE', payload: [-Infinity, 1] }];
+        const emptyParsedRange: ParsedRange[] = [
+          { mode: 'RANGE', payload: null, range: [-Infinity, 1] },
+        ];
 
         expect(rangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
@@ -89,7 +96,7 @@ describe('rangeParse', () => {
       it('should just remove when without parameters', () => {
         const searchWithRangeAsValue = 'search with range()';
         const searchWithRangeRemoved = 'search with';
-        const emptyParsedRange = null;
+        const emptyParsedRange: ParsedRange[] = null;
 
         expect(rangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
@@ -102,7 +109,9 @@ describe('rangeParse', () => {
       it('should replace when one string is found', () => {
         const searchWithRangeAsValue = 'search with range(1,two)';
         const searchWithRangeRemoved = 'search with';
-        const emptyParsedRange = [{ mode: 'RANGE', payload: [1, Infinity] }];
+        const emptyParsedRange: ParsedRange[] = [
+          { mode: 'RANGE', payload: null, range: [1, Infinity] },
+        ];
 
         expect(rangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
@@ -112,7 +121,7 @@ describe('rangeParse', () => {
       it('should remove when only strings are found', () => {
         const searchWithRangeAsValue = 'search with range(one, two)';
         const searchWithRangeRemoved = 'search with';
-        const emptyParsedRange = null;
+        const emptyParsedRange: ParsedRange[] = null;
 
         expect(rangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
