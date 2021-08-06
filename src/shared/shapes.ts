@@ -1,6 +1,7 @@
 export interface ParsedPart {
   payload: string;
   mode: 'NOT' | 'OPTION' | 'QUOTE' | 'TAG' | 'RANGE' | 'DATE_RANGE' | 'OR';
+  childs?: ParsedPart[];
 }
 
 export interface ParsedResult {
