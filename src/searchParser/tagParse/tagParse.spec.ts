@@ -95,6 +95,21 @@ describe('tagParse', () => {
         parsedSearch: parsedTag,
       });
     });
+    it('should parse tag with nested brackets', () => {
+      const searchWithTag = 'search with tag:(keyword1 range(1,2))';
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: 'keyword1 range(1,2)',
+          tag: 'tag',
+          mode: 'TAG',
+        },
+      ];
+
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
+    });
 
     it('should parse tag with quotes', () => {
       const searchWithTag = 'search with tag:"keyword1 keyword2"';

@@ -8,10 +8,11 @@ export function tagParse(search: string): ParsedResult {
    *  tag:"something in double quotes"
    *  tag:'something in single quotes'
    *  tag:(between brackets)
+   *  tag:(between (nested) brackets)
    *  [tag] -> can be any word
    */
   const tagPartRegexAloneBracketQuotes =
-    /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\(.*?\)|.*?(?=(\s|$))))/gi;
+    /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*\)|.*?(?=(\s|$))))/gi;
 
   const tagPartsFound = search.match(tagPartRegexAloneBracketQuotes) || false;
 
