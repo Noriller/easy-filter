@@ -2,12 +2,14 @@ import { ParsedRange } from 'src/shared/shapes';
 import { dateRangeParse } from './dateRangeParse';
 
 describe('dateRangeParse', () => {
+  const emptyFormatDateRangeParse = dateRangeParse();
+
   describe('without a range keyword', () => {
     const searchWithoutRange = 'search';
     const emptyParsedRange: ParsedRange[] = null;
 
     it('should return itself and a null parsed result', () => {
-      expect(dateRangeParse(searchWithoutRange)).toEqual({
+      expect(emptyFormatDateRangeParse(searchWithoutRange)).toEqual({
         search: searchWithoutRange,
         parsedSearch: emptyParsedRange,
       });
@@ -19,7 +21,7 @@ describe('dateRangeParse', () => {
     const emptyParsedRange: ParsedRange[] = null;
 
     it('should not falsely use a word as a keyword', () => {
-      expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+      expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
         search: searchWithRangeAsValue,
         parsedSearch: emptyParsedRange,
       });
@@ -39,7 +41,7 @@ describe('dateRangeParse', () => {
         },
       ];
 
-      expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+      expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
         search: searchWithRangeRemoved,
         parsedSearch: emptyParsedRange,
       });
@@ -62,7 +64,7 @@ describe('dateRangeParse', () => {
         },
       ];
 
-      expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+      expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
         search: searchWithRangeRemoved,
         parsedSearch: emptyParsedRange,
       });
@@ -85,7 +87,7 @@ describe('dateRangeParse', () => {
         },
       ];
 
-      expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+      expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
         search: searchWithRangeRemoved,
         parsedSearch: emptyParsedRange,
       });
@@ -99,11 +101,11 @@ describe('dateRangeParse', () => {
           {
             mode: 'RANGE',
             payload: null,
-            range: [new Date('2020-12-30'), new Date('10000-01-01')],
+            range: [new Date('2020-12-30'), new Date('9999-01-01')],
           },
         ];
 
-        expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+        expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
           parsedSearch: emptyParsedRange,
         });
@@ -119,7 +121,7 @@ describe('dateRangeParse', () => {
           },
         ];
 
-        expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+        expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
           parsedSearch: emptyParsedRange,
         });
@@ -129,7 +131,7 @@ describe('dateRangeParse', () => {
         const searchWithRangeRemoved = 'search with';
         const emptyParsedRange: ParsedRange[] = null;
 
-        expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+        expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
           parsedSearch: emptyParsedRange,
         });
@@ -144,11 +146,11 @@ describe('dateRangeParse', () => {
           {
             mode: 'RANGE',
             payload: null,
-            range: [new Date('2020-12-30'), new Date('10000-01-01')],
+            range: [new Date('2020-12-30'), new Date('9999-01-01')],
           },
         ];
 
-        expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+        expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
           parsedSearch: emptyParsedRange,
         });
@@ -158,9 +160,32 @@ describe('dateRangeParse', () => {
         const searchWithRangeRemoved = 'search with';
         const emptyParsedRange: ParsedRange[] = null;
 
-        expect(dateRangeParse(searchWithRangeAsValue)).toEqual({
+        expect(emptyFormatDateRangeParse(searchWithRangeAsValue)).toEqual({
           search: searchWithRangeRemoved,
           parsedSearch: emptyParsedRange,
+        });
+      });
+    });
+
+    describe('using date formats', () => {
+      it('should use the provided date format', () => {
+        const searchWithRangeAsValue = 'daterange(01-12-2020, 12-01-2020)';
+        const searchWithRangeRemoved = '';
+        const parsedRange: ParsedRange[] = [
+          {
+            mode: 'RANGE',
+            payload: null,
+            range: [
+              new Date(Date.UTC(2020, 11, 1)),
+              new Date(Date.UTC(2020, 0, 12)),
+            ],
+          },
+        ];
+        const parserWithFormat = dateRangeParse('DD-MM-YYYY');
+
+        expect(parserWithFormat(searchWithRangeAsValue)).toEqual({
+          search: searchWithRangeRemoved,
+          parsedSearch: parsedRange,
         });
       });
     });

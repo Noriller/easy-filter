@@ -1,8 +1,11 @@
-import { ParsedPart } from 'src/shared/shapes';
+import { FilterOptions, ParsedPart } from 'src/shared/shapes';
 import { parserPipeline } from './parserPipeline';
 
-export function searchParser(search: string) {
-  const parsedSearch = parserPipeline({ search });
+export function searchParser(search: string, filterOptions?: FilterOptions) {
+  const parsedSearch = parserPipeline({
+    search,
+    filterOptions,
+  });
 
   return parsedSearch.reduce(optionSearchsReducer, {
     options: [],

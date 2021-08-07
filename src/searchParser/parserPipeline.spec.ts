@@ -123,6 +123,30 @@ describe('parserPipeline', () => {
     ]);
   });
 
+  it('should parse tags with date ranges and custom date format', () => {
+    const searchString = `tag:(range(1,2) dateRange(30-12-2020, 30-12-2021))`;
+    const result: ParsedPart[] = parserPipeline({
+      search: searchString,
+      filterOptions: { dateFormat: 'DD-MM-YYYY' },
+    });
+    expect(result).toEqual([
+      {
+        payload: 'range(1,2) dateRange(30-12-2020, 30-12-2021)',
+        tag: 'tag',
+        mode: 'TAG',
+        childs: [
+          { payload: null, range: [1, 2], mode: 'RANGE', childs: null },
+          {
+            payload: null,
+            range: [new Date('2020-12-30'), new Date('2021-12-30')],
+            mode: 'RANGE',
+            childs: null,
+          },
+        ],
+      },
+    ]);
+  });
+
   it('should parse string with quotes', () => {
     const searchString = `"value in quotes 'with subquotes'"`;
     const result: ParsedPart[] = parserPipeline({ search: searchString });

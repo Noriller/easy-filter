@@ -1,4 +1,9 @@
-import { ParsedPart, ParsedResult } from 'src/shared/shapes';
+import {
+  AllTypes,
+  FilterOptions,
+  ParsedPart,
+  ParsedResult,
+} from 'src/shared/shapes';
 import { dateRangeParse } from './dateRangeParse/dateRangeParse';
 import { notParse } from './notParse/notParse';
 import { optionsParse } from './optionsParse/optionsParse';
@@ -16,7 +21,15 @@ import { tagParse } from './tagParse/tagParse';
  * * range/dateRange -> range(x,y) -> only inside tags -> no OR
  * * values (or)
  */
-export function parserPipeline({ search, type = 'INITIAL' }): ParsedPart[] {
+export function parserPipeline({
+  search,
+  type = 'INITIAL',
+  filterOptions = null,
+}: {
+  search: string;
+  type?: AllTypes;
+  filterOptions?: FilterOptions;
+}): ParsedPart[] {
   if (
     type === 'OR' ||
     type === 'RANGE' ||
@@ -62,7 +75,7 @@ export function parserPipeline({ search, type = 'INITIAL' }): ParsedPart[] {
 
   searchString = parserWrapper({
     searchString,
-    parser: dateRangeParse,
+    parser: dateRangeParse(filterOptions?.dateFormat),
     shouldParse: type === 'TAG',
     parsedArray,
   });
@@ -77,6 +90,7 @@ export function parserPipeline({ search, type = 'INITIAL' }): ParsedPart[] {
     object.childs = parserPipeline({
       search: object.payload,
       type: object.mode,
+      filterOptions,
     });
     return object;
   });
