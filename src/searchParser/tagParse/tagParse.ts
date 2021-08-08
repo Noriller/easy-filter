@@ -51,16 +51,17 @@ const tagsReducer = (
     };
   } else {
     const [tag, tagString] = tagPart.split(':');
-    //for this regex to work, you need to use the groups, not the matchs so you cant use [0], but [1]
-    const middleOfBracketsOrItselfRegex = /^\(?(.*?)\)?$/i;
-    const tagPayload = tagString.match(middleOfBracketsOrItselfRegex)[1];
+    const middleOfBracketsOrItselfRegex = /(?:(?:^\()(.*?)(?:\)$))|(^.*?$)/i;
+    const [tagPayloadWithoutBrackers, tagPayloadWithBrackers] = tagString.match(
+      middleOfBracketsOrItselfRegex,
+    );
 
     return {
       reducedString: cleanString(reducedString, tagPart),
       reducedTags: [
         ...reducedTags,
         {
-          payload: tagPayload,
+          payload: tagPayloadWithBrackers || tagPayloadWithoutBrackers,
           tag,
           mode: 'TAG',
         },

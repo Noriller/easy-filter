@@ -25,10 +25,12 @@ export function parserPipeline({
   search,
   type = 'INITIAL',
   filterOptions = null,
+  insideTag = false,
 }: {
   search: string;
   type?: AllTypes;
   filterOptions?: FilterOptions;
+  insideTag?: boolean;
 }): ParsedPart[] {
   if (
     type === 'OR' ||
@@ -70,13 +72,14 @@ export function parserPipeline({
   searchString = parserWrapper({
     searchString,
     parser: rangeParse,
+    shouldParse: insideTag || type === 'TAG',
     parsedArray,
   });
 
   searchString = parserWrapper({
     searchString,
     parser: dateRangeParse(filterOptions?.dateFormat),
-    shouldParse: type === 'TAG',
+    shouldParse: insideTag || type === 'TAG',
     parsedArray,
   });
 
@@ -91,6 +94,7 @@ export function parserPipeline({
       search: object.payload,
       type: object.mode,
       filterOptions,
+      insideTag: insideTag || object.mode === 'TAG',
     });
     return object;
   });

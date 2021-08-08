@@ -127,4 +127,40 @@ describe('tagParse', () => {
       });
     });
   });
+
+  describe('with ranges', () => {
+    it('should parse tag with range in quotes', () => {
+      const searchWithTag = 'search with tag:"range(1,2)"';
+      const searchWithoutParsedPart = 'search with';
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: '"range(1,2)"',
+          tag: 'tag',
+          mode: 'TAG',
+        },
+      ];
+
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
+    });
+
+    it('should parse tag with range alone', () => {
+      const searchWithTag = 'search with tag:range(1,2)';
+      const searchWithoutParsedPart = 'search with';
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: 'range(1,2)',
+          tag: 'tag',
+          mode: 'TAG',
+        },
+      ];
+
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
+    });
+  });
 });
