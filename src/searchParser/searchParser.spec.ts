@@ -1,6 +1,14 @@
 import { searchParser } from './searchParser';
 
 describe('searchParser', () => {
+  it('should parse an empty string', () => {
+    const result = searchParser('');
+    expect(result).toEqual({
+      options: [],
+      searchTree: [],
+    });
+  });
+
   it('should parse string without options', () => {
     const result = searchParser('something');
     expect(result).toEqual({
