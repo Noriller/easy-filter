@@ -1,6 +1,6 @@
 import { tagCrawler } from './tagCrawler';
 
-describe('getTextCrawler', () => {
+describe('tagCrawler', () => {
   describe('with partial values', () => {
     it('should return undefined without tags', () => {
       const object = { some: 'object' };

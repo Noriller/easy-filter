@@ -1,7 +1,7 @@
 import { ParsedPart } from 'src/shared/shapes';
 import { orParse } from './orParse';
 
-describe('optionsParse', () => {
+describe('orParse', () => {
   it('should return null if parsing empty strings', () => {
     const emptySearch = '';
     expect(orParse(emptySearch)).toEqual(null);
