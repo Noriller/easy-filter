@@ -38,7 +38,7 @@ describe('searchParser', () => {
               childs: [
                 {
                   childs: null,
-                  mode: 'RANGE',
+                  mode: 'DATE_RANGE',
                   payload: null,
                   range: [new Date('2020-05-12'), new Date('2021-05-12')],
                 },

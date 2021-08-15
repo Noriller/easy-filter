@@ -115,7 +115,7 @@ describe('parserPipeline', () => {
           {
             payload: null,
             range: [new Date('2020-12-30'), new Date('2021-12-30')],
-            mode: 'RANGE',
+            mode: 'DATE_RANGE',
             childs: null,
           },
         ],
@@ -139,7 +139,7 @@ describe('parserPipeline', () => {
           {
             payload: null,
             range: [new Date('2020-12-30'), new Date('2021-12-30')],
-            mode: 'RANGE',
+            mode: 'DATE_RANGE',
             childs: null,
           },
         ],
