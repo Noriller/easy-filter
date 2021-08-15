@@ -8,12 +8,12 @@ import {
 import { getTextCrawler } from './objectCrawlers/getTextCrawler';
 import { quoteMode } from './modeLogics/quoteMode';
 import { orMode } from './modeLogics/orMode';
-import { tagCrawler } from './objectCrawlers/tagCrawler';
 import { tagMode } from './modeLogics/tagMode';
 import { rangeMode } from './modeLogics/rangeMode';
 import { dateRangeMode } from './modeLogics/dateRangeMode';
 import { parseDate } from '../utils/parseDate';
 import { notMode } from './modeLogics/notMode';
+import { tagNullMode } from './modeLogics/tagNullMode';
 
 function shouldReturnWrapper({
   object,
@@ -63,13 +63,15 @@ export function shouldReturnRecursion({
     return quoteMode({ object, stringifiedObject, searchNode });
 
   if (searchNode.mode === 'TAG') {
-    const objectFromTag = tagCrawler(object, (<ParsedTag>searchNode).tag);
     return tagMode({
-      object: objectFromTag,
-      stringifiedObject: getTextCrawler(objectFromTag),
+      object,
       searchNode: searchNode as ParsedTag,
       dateFormat,
     });
+  }
+
+  if (searchNode.mode === 'TAG_NULL') {
+    return tagNullMode({ object, searchNode: searchNode as ParsedTag });
   }
 
   if (searchNode.mode === 'RANGE')

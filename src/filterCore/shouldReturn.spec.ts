@@ -87,6 +87,26 @@ describe('shouldReturn', () => {
       expect(result).toBe(false);
     });
 
+    describe('with TAG_NULL', () => {
+      it('should not find the value and return true', () => {
+        const { searchTree } = searchParser('invalidTag:NULL');
+        const result = shouldReturn({ object, searchTree });
+        expect(result).toBe(true);
+      });
+
+      it('should not find the value in a chaining tag and return true', () => {
+        const { searchTree } = searchParser('secondTag.invalidTag:NULL');
+        const result = shouldReturn({ object, searchTree });
+        expect(result).toBe(true);
+      });
+
+      it('should find the value and return false', () => {
+        const { searchTree } = searchParser('firstTag:NULL');
+        const result = shouldReturn({ object, searchTree });
+        expect(result).toBe(false);
+      });
+    });
+
     describe('with Range', () => {
       it('should find the value and return true', () => {
         const { searchTree } = searchParser(

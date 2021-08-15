@@ -163,4 +163,23 @@ describe('tagParse', () => {
       });
     });
   });
+
+  describe('null value in tag', () => {
+    it('should parse tag for null values', () => {
+      const searchWithTag = 'search with tag:NULL';
+      const searchWithoutParsedPart = 'search with';
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: 'NULL',
+          tag: 'tag',
+          mode: 'TAG_NULL',
+        },
+      ];
+
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
+    });
+  });
 });

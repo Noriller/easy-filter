@@ -56,14 +56,20 @@ const tagsReducer = (
       middleOfBracketsOrItselfRegex,
     );
 
+    const payload = tagPayloadWithBrackers || tagPayloadWithoutBrackers;
+
+    const tagNullValuesRegex = /^(NULL|NIL|NONE|NOTHING)$/;
+
+    const tagMode = tagNullValuesRegex.test(payload) ? 'TAG_NULL' : 'TAG';
+
     return {
       reducedString: cleanString(reducedString, tagPart),
       reducedTags: [
         ...reducedTags,
         {
-          payload: tagPayloadWithBrackers || tagPayloadWithoutBrackers,
+          payload,
           tag,
-          mode: 'TAG',
+          mode: tagMode,
         },
       ],
     };

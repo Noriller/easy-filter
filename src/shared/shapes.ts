@@ -9,6 +9,7 @@ export type BaseTypes =
   | 'OPTION'
   | 'QUOTE'
   | 'TAG'
+  | 'TAG_NULL'
   | 'RANGE'
   | 'DATE_RANGE'
   | 'OR';
