@@ -54,6 +54,20 @@ describe('rangeParse', () => {
       });
     });
 
+    it('should parse a zero number as zero', () => {
+      const searchWithRangeAsValue = 'search with range(0,2) range(-2,0)';
+      const searchWithRangeRemoved = 'search with';
+      const emptyParsedRange: ParsedRange[] = [
+        { mode: 'RANGE', payload: null, range: [0, 2] },
+        { mode: 'RANGE', payload: null, range: [-2, 0] },
+      ];
+
+      expect(rangeParse(searchWithRangeAsValue)).toEqual({
+        search: searchWithRangeRemoved,
+        parsedSearch: emptyParsedRange,
+      });
+    });
+
     it('should ignore more than 2 parameters', () => {
       const searchWithRangeAsValue = 'search with range(1,2,3,4) range(,6,7,8)';
       const searchWithRangeRemoved = 'search with';
