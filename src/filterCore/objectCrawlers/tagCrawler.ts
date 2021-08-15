@@ -1,4 +1,4 @@
-function tagCrawlerWrapper(object: unknown, tag: string) {
+function tagCrawlerWrapper(object: unknown, tag: string): unknown {
   if (!tag || !object) return;
   const tags = tag.split('.');
   return tagCrawlerRecursion(object, tags);
