@@ -31,7 +31,7 @@ export const dateRangeParse = (dateOptions: DateFormat = null) => (search: strin
     return {
       search: cleanedString,
       parsedSearch: dateRangeParsed.map((range: DateRangePayload): ParsedRange =>
-        ({ payload: null, range, mode: 'RANGE' })
+        ({ payload: null, range, mode: 'DATE_RANGE' })
       )
     };
   } else {

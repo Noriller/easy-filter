@@ -35,7 +35,7 @@ describe('dateRangeParse', () => {
       const searchWithRangeRemoved = 'search with';
       const emptyParsedRange: ParsedRange[] = [
         {
-          mode: 'RANGE',
+          mode: 'DATE_RANGE',
           payload: null,
           range: [new Date('2020-12-30'), new Date('2021-12-30')],
         },
@@ -53,12 +53,12 @@ describe('dateRangeParse', () => {
       const searchWithRangeRemoved = 'search with';
       const emptyParsedRange: ParsedRange[] = [
         {
-          mode: 'RANGE',
+          mode: 'DATE_RANGE',
           payload: null,
           range: [new Date('2020-12-30'), new Date('2021-12-30')],
         },
         {
-          mode: 'RANGE',
+          mode: 'DATE_RANGE',
           payload: null,
           range: [new Date('2020-05-30'), new Date('2021-08-30')],
         },
@@ -76,12 +76,12 @@ describe('dateRangeParse', () => {
       const searchWithRangeRemoved = 'search with';
       const emptyParsedRange: ParsedRange[] = [
         {
-          mode: 'RANGE',
+          mode: 'DATE_RANGE',
           payload: null,
           range: [new Date('2020-12-30'), new Date('2021-12-30')],
         },
         {
-          mode: 'RANGE',
+          mode: 'DATE_RANGE',
           payload: null,
           range: [new Date('0000-01-01'), new Date('2021-08-30')],
         },
@@ -99,7 +99,7 @@ describe('dateRangeParse', () => {
         const searchWithRangeRemoved = 'search with';
         const emptyParsedRange: ParsedRange[] = [
           {
-            mode: 'RANGE',
+            mode: 'DATE_RANGE',
             payload: null,
             range: [new Date('2020-12-30'), new Date('9999-01-01')],
           },
@@ -115,7 +115,7 @@ describe('dateRangeParse', () => {
         const searchWithRangeRemoved = 'search with';
         const emptyParsedRange: ParsedRange[] = [
           {
-            mode: 'RANGE',
+            mode: 'DATE_RANGE',
             payload: null,
             range: [new Date('0000-01-01'), new Date('2021-08-30')],
           },
@@ -144,7 +144,7 @@ describe('dateRangeParse', () => {
         const searchWithRangeRemoved = 'search with';
         const emptyParsedRange: ParsedRange[] = [
           {
-            mode: 'RANGE',
+            mode: 'DATE_RANGE',
             payload: null,
             range: [new Date('2020-12-30'), new Date('9999-01-01')],
           },
@@ -173,7 +173,7 @@ describe('dateRangeParse', () => {
         const searchWithRangeRemoved = '';
         const parsedRange: ParsedRange[] = [
           {
-            mode: 'RANGE',
+            mode: 'DATE_RANGE',
             payload: null,
             range: [
               new Date(Date.UTC(2020, 11, 1)),
