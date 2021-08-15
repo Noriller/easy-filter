@@ -40,3 +40,5 @@ export type DateFormat =
   | 'DD-MM-YYYY'
   | 'MM-DD-YYYY'
   | 'YYYY-DD-MM';
+
+export type NOT_Exclusion = 'NOT_Exclusion';
