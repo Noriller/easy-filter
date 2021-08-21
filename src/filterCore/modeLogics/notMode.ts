@@ -22,6 +22,7 @@ export function notMode({
           stringifiedObject,
           searchNode: c,
           dateFormat,
+          indexing,
         }),
       )
       .filter((x) => x).length > 0;

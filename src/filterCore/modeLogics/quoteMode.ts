@@ -14,13 +14,16 @@ export function quoteMode({
   searchNode: ParsedPart;
   indexing: boolean;
 }): number | boolean {
-  const modeResult = <number[]>(
-    searchNode.childs
-      .map((c) =>
-        shouldReturnRecursion({ object, stringifiedObject, searchNode: c }),
-      )
-      .filter((x) => x)
-  );
+  const modeResult = <number[]>searchNode.childs
+    .map((c) =>
+      shouldReturnRecursion({
+        object,
+        stringifiedObject,
+        searchNode: c,
+        indexing,
+      }),
+    )
+    .filter((x) => x);
 
   if (searchNode.childs.length === modeResult.length) {
     return indexing ? reduceIndexing(modeResult, QUOTE_MULTIPLIER) : true;

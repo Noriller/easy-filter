@@ -26,6 +26,7 @@ export function tagMode({
         stringifiedObject,
         searchNode: c,
         dateFormat,
+        indexing,
       }),
     )
     .filter((x) => x);

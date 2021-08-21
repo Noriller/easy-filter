@@ -37,6 +37,7 @@ function shouldReturnWrapper({
         stringifiedObject,
         searchNode: search,
         dateFormat,
+        indexing,
       }),
     )
     .flat(Infinity)
