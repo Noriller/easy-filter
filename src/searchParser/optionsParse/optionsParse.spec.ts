@@ -39,9 +39,9 @@ describe('optionsParse', () => {
     });
 
     it('should parse options (plural) keyword', () => {
-      const searchWithOptionAsValue = 'search with options(index)';
+      const searchWithOptionAsValue = 'search with options(limit)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions: FilterOptions = { indexing: true };
+      const emptyParsedOptions: FilterOptions = { limit: 0 };
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionRemoved,
@@ -57,6 +57,23 @@ describe('optionsParse', () => {
         normalize: true,
         indexing: true,
         limit: 10,
+      };
+
+      expect(optionsParse(searchWithOptionAsValue)).toEqual({
+        search: searchWithOptionRemoved,
+        parsedOptions: emptyParsedOptions,
+      });
+    });
+  });
+
+  describe('negative options', () => {
+    it('should parse negative options', () => {
+      const searchWithOptionAsValue =
+        'search with options(normalize:false index:false)';
+      const searchWithOptionRemoved = 'search with';
+      const emptyParsedOptions: FilterOptions = {
+        normalize: false,
+        indexing: false,
       };
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({

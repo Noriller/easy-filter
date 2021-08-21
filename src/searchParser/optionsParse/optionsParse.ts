@@ -1,3 +1,4 @@
+import { parseStringToBoolean } from '../../utils/parseStringToBoolean';
 import { FilterOptions, ParsedOptions } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 import { middleBetweenBracketsRegex } from '../../utils/regexes';
@@ -22,13 +23,17 @@ export function optionsParse(search: string): ParsedOptions {
 
     const parsedOptions: FilterOptions = optionParsed.reduce(
       (filterOptions, option) => {
-        if (/normalize/i.test(option)) filterOptions.normalize = true;
-        if (/index/i.test(option)) filterOptions.indexing = true;
-        if (/limit/i.test(option)) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const [_, limit] = option.split(':');
-          filterOptions.limit = parseInt(limit);
-        }
+        const [optionLabel, value] = option.split(':');
+
+        if (/normalize/i.test(optionLabel))
+          filterOptions.normalize =
+            (value && parseStringToBoolean(value)) ?? true;
+        if (/index/i.test(optionLabel))
+          filterOptions.indexing =
+            (value && parseStringToBoolean(value)) ?? true;
+        if (/limit/i.test(optionLabel))
+          filterOptions.limit = parseInt(value) || 0;
+
         return filterOptions;
       },
       {} as FilterOptions,
