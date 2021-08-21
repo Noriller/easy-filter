@@ -1,11 +1,13 @@
-import { ParsedRange } from 'src/shared/shapes';
+import { FilterOptions, ParsedRange } from 'src/shared/shapes';
 
 export function rangeMode({
   object,
   searchNode,
+  filterOptions,
 }: {
   object: number;
   searchNode: ParsedRange;
+  filterOptions: FilterOptions;
 }) {
   if (isNaN(object)) return false;
 

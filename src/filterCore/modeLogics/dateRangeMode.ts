@@ -1,11 +1,13 @@
-import { ParsedRange } from 'src/shared/shapes';
+import { FilterOptions, ParsedRange } from 'src/shared/shapes';
 
 export function dateRangeMode({
   object,
   searchNode,
+  filterOptions,
 }: {
   object: Date;
   searchNode: ParsedRange;
+  filterOptions: FilterOptions;
 }) {
   if (<unknown>object == 'Invalid Date') return false;
   return (

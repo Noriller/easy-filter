@@ -1,16 +1,16 @@
-import { DateFormat, NOT_Exclusion, ParsedPart } from 'src/shared/shapes';
+import { FilterOptions, NOT_Exclusion, ParsedPart } from 'src/shared/shapes';
 import { shouldReturnRecursion } from '../shouldReturn';
 
 export function notMode({
   object,
   stringifiedObject,
   searchNode,
-  dateFormat,
+  filterOptions,
 }: {
   object: unknown;
   stringifiedObject: string;
   searchNode: ParsedPart;
-  dateFormat?: DateFormat;
+  filterOptions: FilterOptions;
 }): boolean | NOT_Exclusion {
   const childsResult =
     searchNode.childs
@@ -19,7 +19,7 @@ export function notMode({
           object,
           stringifiedObject,
           searchNode: c,
-          dateFormat,
+          filterOptions,
         }),
       )
       .filter((x) => x).length > 0;
