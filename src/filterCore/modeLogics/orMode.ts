@@ -3,9 +3,12 @@ import { ParsedPart } from 'src/shared/shapes';
 export function orMode({
   stringifiedObject,
   searchNode,
+  indexing,
 }: {
   stringifiedObject: string;
   searchNode: ParsedPart;
-}): number {
-  return Number(stringifiedObject.includes(searchNode.payload));
+  indexing: boolean;
+}): number | boolean {
+  const bool = stringifiedObject.includes(searchNode.payload);
+  return indexing ? Number(bool) : bool;
 }

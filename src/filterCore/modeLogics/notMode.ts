@@ -6,12 +6,14 @@ export function notMode({
   stringifiedObject,
   searchNode,
   dateFormat,
+  indexing,
 }: {
   object: unknown;
   stringifiedObject: string;
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
-}): number | NOT_Exclusion {
+  indexing: boolean;
+}): number | boolean | NOT_Exclusion {
   const childsResult =
     searchNode.childs
       .map((c) =>
@@ -23,5 +25,10 @@ export function notMode({
         }),
       )
       .filter((x) => x).length > 0;
-  return childsResult ? 'NOT_Exclusion' : 0;
+
+  if (childsResult) {
+    return 'NOT_Exclusion';
+  } else {
+    return indexing ? 0 : false;
+  }
 }

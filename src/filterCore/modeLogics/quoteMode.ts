@@ -7,11 +7,13 @@ export function quoteMode({
   object,
   stringifiedObject,
   searchNode,
+  indexing,
 }: {
   object: unknown;
   stringifiedObject: string;
   searchNode: ParsedPart;
-}): number {
+  indexing: boolean;
+}): number | boolean {
   const modeResult = <number[]>(
     searchNode.childs
       .map((c) =>
@@ -21,8 +23,8 @@ export function quoteMode({
   );
 
   if (searchNode.childs.length === modeResult.length) {
-    return reduceIndexing(modeResult, QUOTE_MULTIPLIER);
+    return indexing ? reduceIndexing(modeResult, QUOTE_MULTIPLIER) : true;
   } else {
-    return 0;
+    return indexing ? 0 : false;
   }
 }

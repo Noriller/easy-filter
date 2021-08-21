@@ -4,15 +4,21 @@ import { RANGE_VALUE } from '../indexing/indexingConstants';
 export function rangeMode({
   object,
   searchNode,
+  indexing,
 }: {
   object: number;
   searchNode: ParsedRange;
-}): number {
+  indexing: boolean;
+}): number | boolean {
   if (isNaN(object)) return 0;
 
   const isInRange =
     Number(object) > searchNode.range[0] &&
     Number(object) < searchNode.range[1];
 
-  return isInRange ? RANGE_VALUE : 0;
+  if (isInRange) {
+    return indexing ? RANGE_VALUE : true;
+  } else {
+    return indexing ? 0 : false;
+  }
 }

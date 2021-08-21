@@ -5,10 +5,16 @@ import { tagCrawler } from '../objectCrawlers/tagCrawler';
 export function tagNullMode({
   object,
   searchNode,
+  indexing,
 }: {
   object: unknown;
   searchNode: ParsedTag;
-}): number {
+  indexing: boolean;
+}): number | boolean {
   const objectFromTag = tagCrawler(object, searchNode.tag);
-  return objectFromTag === undefined ? TAG_NULL_VALUE : 0;
+  if (objectFromTag === undefined) {
+    return indexing ? TAG_NULL_VALUE : true;
+  } else {
+    return indexing ? 0 : false;
+  }
 }

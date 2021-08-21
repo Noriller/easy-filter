@@ -1,5 +1,6 @@
 import {
   DateFormat,
+  FilterOptions,
   NOT_Exclusion,
   ParsedPart,
   ParsedRange,
@@ -19,11 +20,11 @@ import { reduceIndexing } from './indexing/reduceIndexing';
 function shouldReturnWrapper({
   object,
   searchTree,
-  dateFormat,
+  filterOptions: { dateFormat, indexing = false } = {},
 }: {
   object: unknown;
   searchTree: ParsedPart[];
-  dateFormat?: DateFormat;
+  filterOptions?: FilterOptions;
 }): number | boolean {
   if (searchTree.length === 0) return true;
 
@@ -43,7 +44,7 @@ function shouldReturnWrapper({
 
   if (results.includes('NOT_Exclusion')) return false;
 
-  return reduceIndexing(<number[]>results);
+  return indexing ? reduceIndexing(<number[]>results) : results.length > 0;
 }
 
 export function shouldReturnRecursion({
@@ -51,40 +52,49 @@ export function shouldReturnRecursion({
   stringifiedObject,
   searchNode,
   dateFormat,
+  indexing = false,
 }: {
   object: unknown;
   stringifiedObject: string;
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
-}): number | NOT_Exclusion {
+  indexing?: boolean;
+}): number | boolean | NOT_Exclusion {
   if (searchNode.mode === 'OR')
-    return orMode({ stringifiedObject, searchNode });
+    return orMode({ stringifiedObject, searchNode, indexing });
 
   if (searchNode.mode === 'QUOTE')
-    return quoteMode({ object, stringifiedObject, searchNode });
+    return quoteMode({ object, stringifiedObject, searchNode, indexing });
 
   if (searchNode.mode === 'TAG') {
     return tagMode({
       object,
       searchNode: searchNode as ParsedTag,
       dateFormat,
+      indexing,
     });
   }
 
   if (searchNode.mode === 'TAG_NULL') {
-    return tagNullMode({ object, searchNode: searchNode as ParsedTag });
+    return tagNullMode({
+      object,
+      searchNode: searchNode as ParsedTag,
+      indexing,
+    });
   }
 
   if (searchNode.mode === 'RANGE')
     return rangeMode({
       object: object as number,
       searchNode: searchNode as ParsedRange,
+      indexing,
     });
 
   if (searchNode.mode === 'DATE_RANGE')
     return dateRangeMode({
       object: new Date(parseDate(<string>object, dateFormat)),
       searchNode: searchNode as ParsedRange,
+      indexing,
     });
 
   if (searchNode.mode === 'NOT')
@@ -93,6 +103,7 @@ export function shouldReturnRecursion({
       stringifiedObject,
       searchNode,
       dateFormat,
+      indexing,
     });
 }
 

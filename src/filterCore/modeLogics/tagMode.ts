@@ -9,11 +9,13 @@ export function tagMode({
   object,
   searchNode,
   dateFormat,
+  indexing,
 }: {
   object: unknown;
   searchNode: ParsedTag;
   dateFormat?: DateFormat;
-}): number {
+  indexing: boolean;
+}): number | boolean {
   const objectFromTag = tagCrawler(object, searchNode.tag);
   const stringifiedObject = getTextCrawler(objectFromTag);
 
@@ -27,5 +29,7 @@ export function tagMode({
       }),
     )
     .filter((x) => x);
-  return reduceIndexing(modeResult, TAG_MULTIPLIER);
+  return indexing
+    ? reduceIndexing(modeResult, TAG_MULTIPLIER)
+    : modeResult.length > 0;
 }
