@@ -1,27 +1,22 @@
-import { FilterOptions, ParsedPart } from 'src/shared/shapes';
+import { FilterOptions } from '../shared/shapes';
+import { removeDiacritics } from '../utils/removeDiacritics';
+import { optionsParse } from './optionsParse/optionsParse';
 import { parserPipeline } from './parserPipeline';
 
 export function searchParser(search: string, filterOptions?: FilterOptions) {
+  const { search: afterOptionsSearch, parsedOptions } = optionsParse(search);
+
+  const finalOptions = { ...filterOptions, ...parsedOptions };
+
   const parsedSearch = parserPipeline({
-    search,
-    filterOptions,
+    search: finalOptions.normalize
+      ? removeDiacritics(afterOptionsSearch)
+      : afterOptionsSearch,
+    filterOptions: finalOptions,
   });
 
-  return parsedSearch.reduce(optionSearchsReducer, {
-    options: [],
-    searchTree: [],
-  });
+  return {
+    options: parsedOptions,
+    searchTree: parsedSearch,
+  };
 }
-
-const optionSearchsReducer = (
-  { options, searchTree }: { options: string[]; searchTree: ParsedPart[] },
-  node: ParsedPart,
-) => {
-  if (node.mode === 'OPTION') {
-    options.push(node.payload);
-  } else {
-    searchTree.push(node);
-  }
-
-  return { options, searchTree };
-};

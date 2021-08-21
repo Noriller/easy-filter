@@ -1,71 +1,67 @@
-import { ParsedPart } from 'src/shared/shapes';
+import { FilterOptions } from 'src/shared/shapes';
 import { optionsParse } from './optionsParse';
 
 describe('optionsParse', () => {
   describe('without a options keyword', () => {
     const searchWithoutOptions = 'search';
-    const emptyParsedOptions: ParsedPart[] = null;
+    const emptyParsedOptions: FilterOptions = null;
 
     it('should return itself and a empty options result', () => {
       expect(optionsParse(searchWithoutOptions)).toEqual({
         search: searchWithoutOptions,
-        parsedSearch: emptyParsedOptions,
+        parsedOptions: emptyParsedOptions,
       });
     });
   });
 
   describe('without a proper option keyword', () => {
     const searchWithOptionAsValue = 'search with option that isnt a keyword';
-    const emptyParsedOptions: ParsedPart[] = null;
+    const emptyParsedOptions: FilterOptions = null;
 
     it('should not falsely use a word as a keyword', () => {
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionAsValue,
-        parsedSearch: emptyParsedOptions,
+        parsedOptions: emptyParsedOptions,
       });
     });
   });
 
   describe('with option keyword', () => {
     it('should parse option (singular) keyword', () => {
-      const searchWithOptionAsValue = 'search with option(option)';
+      const searchWithOptionAsValue = 'search with option(normalize)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions: ParsedPart[] = [
-        { mode: 'OPTION', payload: 'option' },
-      ];
+      const emptyParsedOptions: FilterOptions = { normalize: true };
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionRemoved,
-        parsedSearch: emptyParsedOptions,
+        parsedOptions: emptyParsedOptions,
       });
     });
 
     it('should parse options (plural) keyword', () => {
-      const searchWithOptionAsValue = 'search with options(option)';
+      const searchWithOptionAsValue = 'search with options(index)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions: ParsedPart[] = [
-        { mode: 'OPTION', payload: 'option' },
-      ];
+      const emptyParsedOptions: FilterOptions = { indexing: true };
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionRemoved,
-        parsedSearch: emptyParsedOptions,
+        parsedOptions: emptyParsedOptions,
       });
     });
 
     it('should parse with multiple options keyword', () => {
       const searchWithOptionAsValue =
-        'search with options(option1) option(option2 option3)';
+        'search with options(limit:10) option(normalize index)';
       const searchWithOptionRemoved = 'search with';
-      const emptyParsedOptions: ParsedPart[] = [
-        { mode: 'OPTION', payload: 'option1' },
-        { mode: 'OPTION', payload: 'option2' },
-        { mode: 'OPTION', payload: 'option3' },
-      ];
+      const emptyParsedOptions: FilterOptions = {
+        normalize: true,
+        indexing: true,
+        limit: 10,
+      };
 
       expect(optionsParse(searchWithOptionAsValue)).toEqual({
         search: searchWithOptionRemoved,
-        parsedSearch: emptyParsedOptions,
+        parsedOptions: emptyParsedOptions,
       });
     });
   });

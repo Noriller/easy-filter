@@ -21,6 +21,11 @@ export interface ParsedResult {
   parsedSearch: ParsedPart[];
 }
 
+export interface ParsedOptions {
+  search: string;
+  parsedOptions: FilterOptions;
+}
+
 export interface ParsedRange extends ParsedPart {
   range: RangePayload | DateRangePayload;
 }
@@ -34,6 +39,9 @@ export type DateRangePayload = [Date, Date];
 
 export interface FilterOptions {
   dateFormat?: DateFormat;
+  normalize?: boolean;
+  limit?: number;
+  indexing?: boolean;
 }
 
 export type DateFormat =

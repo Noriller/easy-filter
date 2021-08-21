@@ -6,7 +6,6 @@ import {
 } from 'src/shared/shapes';
 import { dateRangeParse } from './dateRangeParse/dateRangeParse';
 import { notParse } from './notParse/notParse';
-import { optionsParse } from './optionsParse/optionsParse';
 import { orParse } from './orParse/orParse';
 import { quotesParse } from './quotesParse/quotesParse';
 import { rangeParse } from './rangeParse/rangeParse';
@@ -14,7 +13,6 @@ import { tagParse } from './tagParse/tagParse';
 
 /**
  * ! hierarchy:
- * * options()
  * * not()
  * * quotes -> "" / ''
  * * tags -> tag:value / tag:"quoted" / tag:(multiple values)
@@ -42,13 +40,6 @@ export function parserPipeline({
 
   const parsedArray: ParsedPart[] = [];
   let searchString: string = search;
-
-  searchString = parserWrapper({
-    searchString,
-    parser: optionsParse,
-    shouldParse: type === 'INITIAL',
-    parsedArray,
-  });
 
   searchString = parserWrapper({
     searchString,

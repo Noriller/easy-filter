@@ -25,15 +25,6 @@ describe('parserPipeline', () => {
     ]);
   });
 
-  it('should parse string with options', () => {
-    const searchString = `option(option1 option2)`;
-    const result: ParsedPart[] = parserPipeline({ search: searchString });
-    expect(result).toEqual([
-      { payload: 'option1', mode: 'OPTION', childs: null },
-      { payload: 'option2', mode: 'OPTION', childs: null },
-    ]);
-  });
-
   it('should parse string with tags', () => {
     const searchString = `tag1:(tagValue1 tagValue2) tag2:"tag value in double quotes" tag3:'tag value in single quotes' tag4:value tag5:(with nested (brackets))`;
     const result: ParsedPart[] = parserPipeline({ search: searchString });
