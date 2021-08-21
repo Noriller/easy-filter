@@ -1,5 +1,5 @@
 import {
-  FilterOptions,
+  DateFormat,
   NOT_Exclusion,
   ParsedPart,
   ParsedRange,
@@ -18,11 +18,11 @@ import { tagNullMode } from './modeLogics/tagNullMode';
 function shouldReturnWrapper({
   object,
   searchTree,
-  filterOptions,
+  dateFormat,
 }: {
   object: unknown;
   searchTree: ParsedPart[];
-  filterOptions?: FilterOptions;
+  dateFormat?: DateFormat;
 }): boolean | unknown {
   if (searchTree.length === 0) return true;
 
@@ -34,7 +34,7 @@ function shouldReturnWrapper({
         object,
         stringifiedObject,
         searchNode: search,
-        filterOptions,
+        dateFormat,
       }),
     )
     .flat(Infinity)
@@ -49,47 +49,41 @@ export function shouldReturnRecursion({
   object,
   stringifiedObject,
   searchNode,
-  filterOptions,
+  dateFormat,
 }: {
   object: unknown;
   stringifiedObject: string;
   searchNode: ParsedPart;
-  filterOptions?: FilterOptions;
+  dateFormat?: DateFormat;
 }): boolean | NOT_Exclusion {
   if (searchNode.mode === 'OR')
-    return orMode({ stringifiedObject, searchNode, filterOptions });
+    return orMode({ stringifiedObject, searchNode });
 
   if (searchNode.mode === 'QUOTE')
-    return quoteMode({ object, stringifiedObject, searchNode, filterOptions });
+    return quoteMode({ object, stringifiedObject, searchNode });
 
   if (searchNode.mode === 'TAG') {
     return tagMode({
       object,
       searchNode: searchNode as ParsedTag,
-      filterOptions,
+      dateFormat,
     });
   }
 
   if (searchNode.mode === 'TAG_NULL') {
-    return tagNullMode({
-      object,
-      searchNode: searchNode as ParsedTag,
-      filterOptions,
-    });
+    return tagNullMode({ object, searchNode: searchNode as ParsedTag });
   }
 
   if (searchNode.mode === 'RANGE')
     return rangeMode({
       object: object as number,
       searchNode: searchNode as ParsedRange,
-      filterOptions,
     });
 
   if (searchNode.mode === 'DATE_RANGE')
     return dateRangeMode({
-      object: new Date(parseDate(<string>object, filterOptions?.dateFormat)),
+      object: new Date(parseDate(<string>object, dateFormat)),
       searchNode: searchNode as ParsedRange,
-      filterOptions,
     });
 
   if (searchNode.mode === 'NOT')
@@ -97,7 +91,7 @@ export function shouldReturnRecursion({
       object,
       stringifiedObject,
       searchNode,
-      filterOptions,
+      dateFormat,
     });
 }
 

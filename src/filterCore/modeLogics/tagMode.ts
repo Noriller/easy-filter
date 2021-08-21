@@ -1,4 +1,4 @@
-import { FilterOptions, ParsedTag } from 'src/shared/shapes';
+import { DateFormat, ParsedTag } from 'src/shared/shapes';
 import { getTextCrawler } from '../objectCrawlers/getTextCrawler';
 import { tagCrawler } from '../objectCrawlers/tagCrawler';
 import { shouldReturnRecursion } from '../shouldReturn';
@@ -6,11 +6,11 @@ import { shouldReturnRecursion } from '../shouldReturn';
 export function tagMode({
   object,
   searchNode,
-  filterOptions,
+  dateFormat,
 }: {
   object: unknown;
   searchNode: ParsedTag;
-  filterOptions?: FilterOptions;
+  dateFormat?: DateFormat;
 }) {
   const objectFromTag = tagCrawler(object, searchNode.tag);
   const stringifiedObject = getTextCrawler(objectFromTag);
@@ -22,7 +22,7 @@ export function tagMode({
           object: objectFromTag,
           stringifiedObject,
           searchNode: c,
-          filterOptions,
+          dateFormat,
         }),
       )
       .filter((x) => x).length > 0

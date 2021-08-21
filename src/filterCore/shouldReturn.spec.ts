@@ -167,7 +167,7 @@ describe('shouldReturn', () => {
           const result = shouldReturn({
             object: dateObject,
             searchTree,
-            filterOptions: { dateFormat },
+            dateFormat,
           });
           expect(result).toBe(true);
         });
