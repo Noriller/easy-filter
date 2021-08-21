@@ -1,4 +1,5 @@
 import { ParsedRange } from 'src/shared/shapes';
+import { RANGE_VALUE } from '../indexing/indexingConstants';
 
 export function rangeMode({
   object,
@@ -6,10 +7,12 @@ export function rangeMode({
 }: {
   object: number;
   searchNode: ParsedRange;
-}) {
-  if (isNaN(object)) return false;
+}): number {
+  if (isNaN(object)) return 0;
 
-  return (
-    Number(object) > searchNode.range[0] && Number(object) < searchNode.range[1]
-  );
+  const isInRange =
+    Number(object) > searchNode.range[0] &&
+    Number(object) < searchNode.range[1];
+
+  return isInRange ? RANGE_VALUE : 0;
 }

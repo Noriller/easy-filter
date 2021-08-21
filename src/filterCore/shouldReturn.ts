@@ -14,6 +14,7 @@ import { dateRangeMode } from './modeLogics/dateRangeMode';
 import { parseDate } from '../utils/parseDate';
 import { notMode } from './modeLogics/notMode';
 import { tagNullMode } from './modeLogics/tagNullMode';
+import { reduceIndexing } from './indexing/reduceIndexing';
 
 function shouldReturnWrapper({
   object,
@@ -23,7 +24,7 @@ function shouldReturnWrapper({
   object: unknown;
   searchTree: ParsedPart[];
   dateFormat?: DateFormat;
-}): boolean | unknown {
+}): number | boolean {
   if (searchTree.length === 0) return true;
 
   const stringifiedObject = getTextCrawler(object);
@@ -42,7 +43,7 @@ function shouldReturnWrapper({
 
   if (results.includes('NOT_Exclusion')) return false;
 
-  return results.length > 0;
+  return reduceIndexing(<number[]>results);
 }
 
 export function shouldReturnRecursion({
@@ -55,7 +56,7 @@ export function shouldReturnRecursion({
   stringifiedObject: string;
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
-}): boolean | NOT_Exclusion {
+}): number | NOT_Exclusion {
   if (searchNode.mode === 'OR')
     return orMode({ stringifiedObject, searchNode });
 

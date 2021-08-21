@@ -6,6 +6,6 @@ export function orMode({
 }: {
   stringifiedObject: string;
   searchNode: ParsedPart;
-}): boolean {
-  return stringifiedObject.includes(searchNode.payload);
+}): number {
+  return Number(stringifiedObject.includes(searchNode.payload));
 }
