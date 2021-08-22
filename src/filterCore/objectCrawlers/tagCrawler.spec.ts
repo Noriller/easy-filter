@@ -110,5 +110,20 @@ describe('tagCrawler', () => {
       const tags = 'thirdTag.1';
       expect(tagCrawler(complexObject, tags)).toBe(complexObject.thirdTag[1]);
     });
+
+    describe('searching inside subarray', () => {
+      it('should search using the wildcard and find two values', () => {
+        const tags = 'secondTag.*.subObject';
+        expect(tagCrawler(complexObject, tags)).toEqual([
+          complexObject.secondTag[1].subObject,
+          complexObject.secondTag[2].subObject,
+        ]);
+      });
+
+      it('should search using the wildcard and find no values', () => {
+        const tags = 'secondTag.*.random';
+        expect(tagCrawler(complexObject, tags)).toEqual([]);
+      });
+    });
   });
 });
