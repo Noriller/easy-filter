@@ -7,6 +7,13 @@ function tagCrawlerWrapper(object: unknown, tag: string): unknown {
 function tagCrawlerRecursion(object: unknown, tags: string[]) {
   if (!tags || !object || tags.length === 0) return object;
   const [firstTag, ...restTags] = tags;
+
+  if (firstTag === '*' && Array.isArray(object)) {
+    return object
+      .map((ea) => tagCrawlerRecursion(ea, restTags))
+      .filter((x) => x);
+  }
+
   return tagCrawlerRecursion(object[firstTag], restTags);
 }
 
