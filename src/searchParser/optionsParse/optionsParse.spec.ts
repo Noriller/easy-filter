@@ -1,4 +1,4 @@
-import { FilterOptions } from 'src/shared/shapes';
+import { FilterOptions } from '../../shared/shapes';
 import { optionsParse } from './optionsParse';
 
 describe('optionsParse', () => {

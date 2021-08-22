@@ -1,4 +1,4 @@
-import { ParsedTag } from 'src/shared/shapes';
+import { ParsedTag } from '../../shared/shapes';
 import { tagParse } from './tagParse';
 
 describe('tagParse', () => {

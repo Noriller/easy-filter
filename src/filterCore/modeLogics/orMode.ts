@@ -1,4 +1,4 @@
-import { ParsedPart } from 'src/shared/shapes';
+import { ParsedPart } from '../../shared/shapes';
 
 export function orMode({
   stringifiedObject,

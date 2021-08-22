@@ -3,7 +3,7 @@ import {
   DateRangePayload,
   ParsedRange,
   DateFormat,
-} from 'src/shared/shapes';
+} from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 import { middleBetweenBracketsRegex } from '../../utils/regexes';
 import { parseDate } from '../../utils/parseDate';

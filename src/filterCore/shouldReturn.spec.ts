@@ -1,4 +1,4 @@
-import { DateFormat } from 'src/shared/shapes';
+import { DateFormat } from '../shared/shapes';
 import { searchParser } from '../searchParser/searchParser';
 import { shouldReturn } from './shouldReturn';
 

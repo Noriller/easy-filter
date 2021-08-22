@@ -1,4 +1,4 @@
-import { DateFormat } from 'src/shared/shapes';
+import { DateFormat } from '../shared/shapes';
 
 export function parseDate(date: string, dateFormat?: DateFormat) {
   if (!dateFormat) return date;

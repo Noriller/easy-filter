@@ -1,4 +1,4 @@
-import { DateFormat, ParsedTag } from 'src/shared/shapes';
+import { DateFormat, ParsedTag } from '../../shared/shapes';
 import { getTextCrawler } from '../objectCrawlers/getTextCrawler';
 import { tagCrawler } from '../objectCrawlers/tagCrawler';
 import { shouldReturnRecursion } from '../shouldReturn';

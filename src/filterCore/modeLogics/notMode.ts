@@ -1,4 +1,4 @@
-import { DateFormat, NOT_Exclusion, ParsedPart } from 'src/shared/shapes';
+import { DateFormat, NOT_Exclusion, ParsedPart } from '../../shared/shapes';
 import { shouldReturnRecursion } from '../shouldReturn';
 
 export function notMode({

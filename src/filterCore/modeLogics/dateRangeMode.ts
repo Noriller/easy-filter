@@ -1,4 +1,4 @@
-import { ParsedRange } from 'src/shared/shapes';
+import { ParsedRange } from '../../shared/shapes';
 import { RANGE_VALUE } from '../indexing/indexingConstants';
 
 export function dateRangeMode({

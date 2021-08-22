@@ -3,7 +3,7 @@ import {
   FilterOptions,
   ParsedPart,
   ParsedResult,
-} from 'src/shared/shapes';
+} from '../shared/shapes';
 import { dateRangeParse } from './dateRangeParse/dateRangeParse';
 import { notParse } from './notParse/notParse';
 import { orParse } from './orParse/orParse';

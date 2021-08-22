@@ -1,4 +1,4 @@
-import { ParsedPart } from 'src/shared/shapes';
+import { ParsedPart } from '../shared/shapes';
 import { parserPipeline } from './parserPipeline';
 
 describe('parserPipeline', () => {
