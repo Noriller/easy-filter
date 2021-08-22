@@ -4,7 +4,7 @@ describe('searchParser', () => {
   it('should parse an empty string', () => {
     const result = searchParser('');
     expect(result).toEqual({
-      options: null,
+      options: {},
       searchTree: [],
     });
   });
@@ -12,7 +12,7 @@ describe('searchParser', () => {
   it('should parse string without options', () => {
     const result = searchParser('something');
     expect(result).toEqual({
-      options: null,
+      options: {},
       searchTree: [{ payload: 'something', mode: 'OR', childs: null }],
     });
   });
@@ -30,7 +30,7 @@ describe('searchParser', () => {
       'something tag:"dateRange(2020-05-12,2021-05-12)"',
     );
     expect(result).toEqual({
-      options: null,
+      options: {},
       searchTree: [
         {
           childs: [
@@ -59,7 +59,7 @@ describe('searchParser', () => {
   it('should parse with range alone', () => {
     const result = searchParser('something tag:range(1,2)');
     expect(result).toEqual({
-      options: null,
+      options: {},
       searchTree: [
         {
           payload: 'range(1,2)',
@@ -86,7 +86,7 @@ describe('searchParser', () => {
   it('should not parse range alone', () => {
     const result = searchParser('something range(1,2)');
     expect(result).toEqual({
-      options: null,
+      options: {},
       searchTree: [
         {
           payload: 'something',

@@ -16,7 +16,7 @@ export function searchParser(search: string, filterOptions?: FilterOptions) {
   });
 
   return {
-    options: parsedOptions,
+    options: finalOptions,
     searchTree: parsedSearch,
   };
 }
