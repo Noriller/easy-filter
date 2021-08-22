@@ -13,8 +13,8 @@ export function rangeMode({
   if (isNaN(object)) return 0;
 
   const isInRange =
-    Number(object) > searchNode.range[0] &&
-    Number(object) < searchNode.range[1];
+    Number(object) >= searchNode.range[0] &&
+    Number(object) <= searchNode.range[1];
 
   if (isInRange) {
     return indexing ? RANGE_VALUE : true;

@@ -13,8 +13,8 @@ export function dateRangeMode({
   if (<unknown>object == 'Invalid Date') return 0;
 
   const isInRange =
-    object > new Date(searchNode.range[0]) &&
-    object < new Date(searchNode.range[1]);
+    object >= new Date(searchNode.range[0]) &&
+    object <= new Date(searchNode.range[1]);
 
   if (isInRange) {
     return indexing ? RANGE_VALUE : true;
