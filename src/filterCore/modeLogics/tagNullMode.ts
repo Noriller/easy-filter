@@ -12,7 +12,7 @@ export function tagNullMode({
   indexing: boolean;
 }): number | boolean {
   const objectFromTag = tagCrawler(object, searchNode.tag);
-  if (objectFromTag === undefined) {
+  if (objectFromTag.length === 0) {
     return indexing ? TAG_NULL_VALUE : true;
   } else {
     return indexing ? 0 : false;

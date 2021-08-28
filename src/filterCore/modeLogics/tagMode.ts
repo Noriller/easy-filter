@@ -16,13 +16,13 @@ export function tagMode({
   dateFormat?: DateFormat;
   indexing: boolean;
 }): number | boolean {
-  const objectFromTag = tagCrawler(object, searchNode.tag);
+  const objectFromTag = tagCrawler(object, searchNode.tag, searchNode.alias);
   const stringifiedObject = getTextCrawler(objectFromTag);
 
   const modeResult = <number[]>searchNode.childs
     .map((c) =>
       shouldReturnRecursion({
-        object: objectFromTag,
+        object: objectFromTag.length === 1 ? objectFromTag[0] : objectFromTag,
         stringifiedObject,
         searchNode: c,
         dateFormat,

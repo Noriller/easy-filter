@@ -11,7 +11,7 @@ export function addAliases(node: ParsedPart, tagAlias: TagAlias): ParsedPart {
   return node;
 }
 
-function getAliases({ tag, tagAlias }: { tag: string; tagAlias: TagAlias; }) {
+function getAliases({ tag, tagAlias }: { tag: string; tagAlias: TagAlias }) {
   return Object.entries(tagAlias)
     .flatMap(([key, value]) => {
       return tag.includes(key) ? value : undefined;
