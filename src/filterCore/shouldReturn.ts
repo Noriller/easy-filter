@@ -41,7 +41,7 @@ function shouldReturnWrapper({
       }),
     )
     .flat(Infinity)
-    .filter((x) => x);
+    .filter(Boolean);
 
   if (results.includes('NOT_Exclusion')) return false;
 

@@ -25,7 +25,7 @@ export function notMode({
           indexing,
         }),
       )
-      .filter((x) => x).length > 0;
+      .filter(Boolean).length > 0;
 
   if (childsResult) {
     return 'NOT_Exclusion';

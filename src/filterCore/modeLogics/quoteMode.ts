@@ -23,7 +23,7 @@ export function quoteMode({
         indexing,
       }),
     )
-    .filter((x) => x);
+    .filter(Boolean);
 
   if (searchNode.childs.length === modeResult.length) {
     return indexing ? reduceIndexing(modeResult, QUOTE_MULTIPLIER) : true;

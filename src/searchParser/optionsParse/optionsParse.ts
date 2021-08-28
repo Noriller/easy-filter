@@ -13,7 +13,7 @@ export function optionsParse(search: string): ParsedOptions {
       return option
         .match(middleBetweenBracketsRegex)[0]
         .split(' ')
-        .filter((x) => x);
+        .filter(Boolean);
     });
 
     const cleanedString = optionsPartFound.reduce(

@@ -29,7 +29,7 @@ export function tagMode({
         indexing,
       }),
     )
-    .filter((x) => x);
+    .filter(Boolean);
   return indexing
     ? reduceIndexing(modeResult, TAG_MULTIPLIER)
     : modeResult.length > 0;
