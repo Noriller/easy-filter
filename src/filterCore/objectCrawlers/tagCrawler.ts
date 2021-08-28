@@ -1,7 +1,9 @@
+import { TagAlias } from '../../shared/shapes';
+
 function tagCrawlerWrapper(
   object: unknown,
   tag: string,
-  alias?: string[],
+  alias?: TagAlias,
 ): unknown[] {
   if (!tag || !object) return [];
 
@@ -19,7 +21,7 @@ function tagCrawlerWrapper(
 
 function tagCrawlerRecursion(
   object: unknown,
-  alias: string[],
+  alias: TagAlias,
   tags: string[],
 ): unknown {
   if (!tags || !object || tags.length === 0) return object;
@@ -39,11 +41,11 @@ function tagCrawlerRecursion(
   ];
 }
 
-function aliasesTags(alias: string[], tag: string): string[] {
+function aliasesTags(alias: TagAlias, tag: string): string[] {
   return alias ? getAliasTags(alias, tag) : [];
 }
 
-function getAliasTags(alias: string[], tag: string): string[] {
+function getAliasTags(alias: TagAlias, tag: string): string[] {
   const fullMatch = alias[tag];
   return fullMatch ? fullMatch : [];
 }

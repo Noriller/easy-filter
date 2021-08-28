@@ -11,10 +11,20 @@ export function addAliases(node: ParsedPart, tagAlias: TagAlias): ParsedPart {
   return node;
 }
 
-function getAliases({ tag, tagAlias }: { tag: string; tagAlias: TagAlias }) {
-  return Object.entries(tagAlias)
-    .flatMap(([key, value]) => {
-      return tag.includes(key) ? value : undefined;
-    })
+function getAliases({
+  tag,
+  tagAlias,
+}: {
+  tag: string;
+  tagAlias: TagAlias;
+}): TagAlias {
+  const aliasArr = Object.entries(tagAlias)
+    .map(([key, value]) =>
+      tag.includes(key) ? ({ [key]: value } as TagAlias) : undefined,
+    )
     .filter(Boolean);
+  return aliasArr.reduce(
+    (acc, alias) => ({ ...acc, ...alias }),
+    {} as TagAlias,
+  );
 }

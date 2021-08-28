@@ -48,4 +48,30 @@ describe('EasyFilter', () => {
       expect(result[0]._EasyFilterIndex).toBe(6);
     });
   });
+
+  describe('using tagAlias', () => {
+    const tagAlias = {
+      fullTag: ['moves.*.move.name'],
+      firstPartTag: ['moves.*'],
+      lastPartTag: ['move.name'],
+    };
+
+    it('should search using the alias for a full tag', () => {
+      const efta = EasyFilter({ source: poke10, tagAlias });
+      const result = efta.search('fullTag:swords-dance');
+      expect(result).toHaveLength(6);
+    });
+
+    it('should search using the alias for a partial tag', () => {
+      const efta = EasyFilter({ source: poke10, tagAlias });
+      const result = efta.search('moves.*.lastPartTag:swords-dance');
+      expect(result).toHaveLength(6);
+    });
+
+    it('should search using multiple alias', () => {
+      const efta = EasyFilter({ source: poke10, tagAlias });
+      const result = efta.search('firstPartTag.lastPartTag:swords-dance');
+      expect(result).toHaveLength(6);
+    });
+  });
 });

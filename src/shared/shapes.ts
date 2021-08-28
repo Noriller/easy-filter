@@ -32,7 +32,7 @@ export interface ParsedRange extends ParsedPart {
 
 export interface ParsedTag extends ParsedPart {
   tag: string;
-  alias?: string[];
+  alias?: TagAlias;
 }
 
 export type RangePayload = [number, number];
