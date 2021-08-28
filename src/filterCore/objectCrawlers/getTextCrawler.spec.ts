@@ -26,6 +26,10 @@ describe('getTextCrawler', () => {
       const nil = null;
       expect(getTextCrawler(nil)).toBe(undefined);
     });
+
+    it('should not return a empty array as string', () => {
+      expect(getTextCrawler([])).toBe('');
+    });
   });
 
   describe('using arrays', () => {

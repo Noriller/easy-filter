@@ -5,11 +5,11 @@ describe('tagCrawler', () => {
     it('should return undefined without tags', () => {
       const object = { some: 'object' };
       const tags = null;
-      expect(tagCrawler(object, tags)).toBe(undefined);
+      expect(tagCrawler(object, tags)).toEqual([]);
     });
     it('should return undefined without object', () => {
       const tags = 'first.second';
-      expect(tagCrawler(undefined, tags)).toBe(undefined);
+      expect(tagCrawler(undefined, tags)).toEqual([]);
     });
   });
 
@@ -22,11 +22,11 @@ describe('tagCrawler', () => {
     };
     it('should return the value from the tag', () => {
       const tags = 'first';
-      expect(tagCrawler(object, tags)).toBe(object.first);
+      expect(tagCrawler(object, tags)).toEqual([object.first]);
     });
     it('should return the value from the chaining tag', () => {
       const tags = 'first.second';
-      expect(tagCrawler(object, tags)).toBe(value);
+      expect(tagCrawler(object, tags)).toEqual([value]);
     });
   });
 
@@ -39,11 +39,11 @@ describe('tagCrawler', () => {
     };
     it('should return undefined when the first tag dont exist', () => {
       const tags = 'nullTag';
-      expect(tagCrawler(object, tags)).toBe(undefined);
+      expect(tagCrawler(object, tags)).toEqual([]);
     });
     it('should return undefined if the first tag from the chaining tag dont exist', () => {
       const tags = 'nullTag.second';
-      expect(tagCrawler(object, tags)).toBe(undefined);
+      expect(tagCrawler(object, tags)).toEqual([]);
     });
   });
 
@@ -51,12 +51,12 @@ describe('tagCrawler', () => {
     it('should return the index of the array', () => {
       const object = [1, 2, 3, 4];
       const tags = '0';
-      expect(tagCrawler(object, tags)).toBe(1);
+      expect(tagCrawler(object, tags)).toEqual([1]);
     });
     it('should return the value from the subobject', () => {
       const object = [{ value: 1 }, { value: 2 }];
       const tags = '0.value';
-      expect(tagCrawler(object, tags)).toBe(1);
+      expect(tagCrawler(object, tags)).toEqual([1]);
     });
   });
 
@@ -86,29 +86,33 @@ describe('tagCrawler', () => {
 
     it('should return the entire subobject', () => {
       const tags = 'secondTag';
-      expect(tagCrawler(complexObject, tags)).toBe(complexObject.secondTag);
+      expect(tagCrawler(complexObject, tags)).toEqual(complexObject.secondTag);
     });
 
     it('should return the subobject inside the array', () => {
       const tags = 'secondTag.2';
-      expect(tagCrawler(complexObject, tags)).toBe(complexObject.secondTag[2]);
+      expect(tagCrawler(complexObject, tags)).toEqual([
+        complexObject.secondTag[2],
+      ]);
     });
 
     it('should return the subobject inside the object in the array', () => {
       const tags = 'secondTag.2.subObject';
-      expect(tagCrawler(complexObject, tags)).toBe(
+      expect(tagCrawler(complexObject, tags)).toEqual([
         complexObject.secondTag[2].subObject,
-      );
+      ]);
     });
 
     it('should not find a object outside of the bounds of the array inside the complex object', () => {
       const tags = 'secondTag.999.subObject';
-      expect(tagCrawler(complexObject, tags)).toBe(undefined);
+      expect(tagCrawler(complexObject, tags)).toEqual([]);
     });
 
     it('should find a tag that is a number and not an array index', () => {
       const tags = 'thirdTag.1';
-      expect(tagCrawler(complexObject, tags)).toBe(complexObject.thirdTag[1]);
+      expect(tagCrawler(complexObject, tags)).toEqual([
+        complexObject.thirdTag[1],
+      ]);
     });
 
     describe('searching inside subarray', () => {
