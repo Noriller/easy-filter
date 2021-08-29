@@ -54,6 +54,7 @@ describe('EasyFilter', () => {
       fullTag: ['moves.*.move.name'],
       firstPartTag: ['moves.*'],
       lastPartTag: ['move.name'],
+      aliasWithMultipleValues: ['abilities.*.slot', 'id'],
     };
 
     it('should search using the alias for a full tag', () => {
@@ -72,6 +73,12 @@ describe('EasyFilter', () => {
       const efta = EasyFilter({ source: poke10, tagAlias });
       const result = efta.search('firstPartTag.lastPartTag:swords-dance');
       expect(result).toHaveLength(6);
+    });
+
+    it('should search using one alias with multiple tags', () => {
+      const efta = EasyFilter({ source: poke10, tagAlias });
+      expect(efta.search('aliasWithMultipleValues:2')).toHaveLength(1);
+      expect(efta.search('aliasWithMultipleValues:3')).toHaveLength(10);
     });
   });
 });
