@@ -1,7 +1,10 @@
 import { parseStringToBoolean } from '../../utils/parseStringToBoolean';
-import { FilterOptions, ParsedOptions } from '../../shared/shapes';
+import { DateFormat, FilterOptions, ParsedOptions } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
-import { middleBetweenBracketsRegex } from '../../utils/regexes';
+import {
+  dateSplittersGlobal,
+  middleBetweenBracketsRegex,
+} from '../../utils/regexes';
 
 export function optionsParse(search: string): ParsedOptions {
   const optionsPartRegex = /\b(options|option)\(.+?\)/gi;
@@ -33,6 +36,11 @@ export function optionsParse(search: string): ParsedOptions {
             (value && parseStringToBoolean(value)) ?? true;
         if (/limit/i.test(optionLabel))
           filterOptions.limit = parseInt(value) || 0;
+        if (/dateFormat/i.test(optionLabel)) {
+          const validFormats = ['YYYYMMDD', 'DDMMYYYY', 'MMDDYYYY', 'YYYYDDMM'];
+          if (validFormats.includes(value.replace(dateSplittersGlobal, '')))
+            filterOptions.dateFormatSearch = value as DateFormat;
+        }
 
         return filterOptions;
       },

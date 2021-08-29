@@ -1,14 +1,12 @@
 import { DateFormat } from '../shared/shapes';
+import { dateSplitters } from './regexes';
 
 export function parseDate(date: string, dateFormat?: DateFormat) {
   if (!dateFormat) return date;
 
-  const dateFormatSplit = dateFormat.toUpperCase().split(/[-/., ]/i);
+  const dateFormatSplit = dateFormat.toUpperCase().split(dateSplitters);
 
-  const dateSplit = date
-    .replace(/ /g, '')
-    .toUpperCase()
-    .split(/[-/., ]/i);
+  const dateSplit = date.replace(/ /g, '').toUpperCase().split(dateSplitters);
 
   const formatedDateObject = Object.fromEntries(
     dateFormatSplit.map((_, i) => [dateFormatSplit[i], dateSplit[i]]),

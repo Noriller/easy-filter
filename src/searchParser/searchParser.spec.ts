@@ -56,6 +56,54 @@ describe('searchParser', () => {
     });
   });
 
+  it('should parse the date range with the custom date format', () => {
+    const searchString = `something tag:(dateRange(01-05-2020, 02-05-2021))`;
+    const result = searchParser(searchString, { dateFormat: 'DD-MM-YYYY' });
+    expect(result).toEqual({
+      options: { dateFormat: 'DD-MM-YYYY' },
+      searchTree: [
+        {
+          childs: [
+            {
+              childs: null,
+              mode: 'DATE_RANGE',
+              payload: null,
+              range: [new Date('2020-05-01'), new Date('2021-05-02')],
+            },
+          ],
+          mode: 'TAG',
+          payload: 'dateRange(01-05-2020, 02-05-2021)',
+          tag: 'tag',
+        },
+        { childs: null, mode: 'OR', payload: 'something' },
+      ],
+    });
+  });
+
+  it('should parse the date range overriding the custom date format', () => {
+    const searchString = `something tag:(dateRange(01-05-2020, 02-05-2021)) option(dateformat:MM-DD-YYYY)`;
+    const result = searchParser(searchString, { dateFormat: 'DD-MM-YYYY' });
+    expect(result).toEqual({
+      options: { dateFormat: 'DD-MM-YYYY', dateFormatSearch: 'MM-DD-YYYY' },
+      searchTree: [
+        {
+          childs: [
+            {
+              childs: null,
+              mode: 'DATE_RANGE',
+              payload: null,
+              range: [new Date('2020-01-05'), new Date('2021-02-05')],
+            },
+          ],
+          mode: 'TAG',
+          payload: 'dateRange(01-05-2020, 02-05-2021)',
+          tag: 'tag',
+        },
+        { childs: null, mode: 'OR', payload: 'something' },
+      ],
+    });
+  });
+
   it('should parse with range alone', () => {
     const result = searchParser('something tag:range(1,2)');
     expect(result).toEqual({

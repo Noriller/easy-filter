@@ -69,7 +69,9 @@ export function parserPipeline({
 
   searchString = parserWrapper({
     searchString,
-    parser: dateRangeParse(filterOptions?.dateFormat),
+    parser: dateRangeParse(
+      filterOptions?.dateFormatSearch || filterOptions?.dateFormat,
+    ),
     shouldParse: insideTag || type === 'TAG',
     parsedArray,
   });

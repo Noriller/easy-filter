@@ -40,6 +40,7 @@ export type DateRangePayload = [Date, Date];
 
 export interface FilterOptions {
   dateFormat?: DateFormat;
+  dateFormatSearch?: DateFormat;
   normalize?: boolean;
   limit?: number;
   indexing?: boolean;
