@@ -49,36 +49,36 @@ describe('EasyFilter', () => {
     });
   });
 
-  describe('using tagAlias', () => {
-    const tagAlias = {
+  describe('using tagAliases', () => {
+    const tagAliases = {
       fullTag: ['moves.*.move.name'],
       firstPartTag: ['moves.*'],
       lastPartTag: ['move.name'],
-      aliasWithMultipleValues: ['abilities.*.slot', 'id'],
+      aliasesWithMultipleValues: ['abilities.*.slot', 'id'],
     };
 
-    it('should search using the alias for a full tag', () => {
-      const efta = EasyFilter({ source: poke10, tagAlias });
+    it('should search using the aliases for a full tag', () => {
+      const efta = EasyFilter({ source: poke10, tagAliases });
       const result = efta.search('fullTag:swords-dance');
       expect(result).toHaveLength(6);
     });
 
-    it('should search using the alias for a partial tag', () => {
-      const efta = EasyFilter({ source: poke10, tagAlias });
+    it('should search using the aliases for a partial tag', () => {
+      const efta = EasyFilter({ source: poke10, tagAliases });
       const result = efta.search('moves.*.lastPartTag:swords-dance');
       expect(result).toHaveLength(6);
     });
 
-    it('should search using multiple alias', () => {
-      const efta = EasyFilter({ source: poke10, tagAlias });
+    it('should search using multiple aliases', () => {
+      const efta = EasyFilter({ source: poke10, tagAliases });
       const result = efta.search('firstPartTag.lastPartTag:swords-dance');
       expect(result).toHaveLength(6);
     });
 
-    it('should search using one alias with multiple tags', () => {
-      const efta = EasyFilter({ source: poke10, tagAlias });
-      expect(efta.search('aliasWithMultipleValues:2')).toHaveLength(1);
-      expect(efta.search('aliasWithMultipleValues:3')).toHaveLength(10);
+    it('should search using one aliases with multiple tags', () => {
+      const efta = EasyFilter({ source: poke10, tagAliases });
+      expect(efta.search('aliasesWithMultipleValues:2')).toHaveLength(1);
+      expect(efta.search('aliasesWithMultipleValues:3')).toHaveLength(10);
     });
   });
 });

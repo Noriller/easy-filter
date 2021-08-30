@@ -1,20 +1,20 @@
 import { shouldReturn } from './filterCore/shouldReturn';
 import { searchParser } from './searchParser/searchParser';
 import { addAliases } from './searchParser/tagAliases';
-import { FilterOptions, ParsedPart, TagAlias } from './shared/shapes';
+import { FilterOptions, ParsedPart, TagAliases } from './shared/shapes';
 import { removeDiacritics } from './utils/removeDiacritics';
 
 export default function EasyFilter({
   source,
   filterOptions = {},
-  tagAlias = {},
+  tagAliases = {},
 }: {
   source: Array<unknown>;
   filterOptions?: FilterOptions;
-  tagAlias?: TagAlias;
+  tagAliases?: TagAliases;
 }) {
   return {
-    search: (string) => search(string, source, filterOptions, tagAlias),
+    search: (string) => search(string, source, filterOptions, tagAliases),
   };
 }
 
@@ -22,15 +22,15 @@ function search(
   string: string,
   source: Array<unknown>,
   filterOptions: FilterOptions,
-  tagAlias: TagAlias,
+  tagAliases: TagAliases,
 ) {
   const { options, searchTree } = searchParser(string, filterOptions);
 
   let finalTree: ParsedPart[] = searchTree;
 
-  if (tagAlias !== {}) {
+  if (tagAliases !== {}) {
     finalTree = searchTree.map((node) => {
-      return addAliases(node, tagAlias);
+      return addAliases(node, tagAliases);
     });
   }
 

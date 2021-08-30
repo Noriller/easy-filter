@@ -32,7 +32,7 @@ export interface ParsedRange extends ParsedPart {
 
 export interface ParsedTag extends ParsedPart {
   tag: string;
-  alias?: TagAlias;
+  aliases?: TagAliases;
 }
 
 export type RangePayload = [number, number];
@@ -54,6 +54,6 @@ export type DateFormat =
 
 export type NOT_Exclusion = 'NOT_Exclusion';
 
-export interface TagAlias {
+export interface TagAliases {
   [key: string]: string[];
 }

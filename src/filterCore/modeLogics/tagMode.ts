@@ -16,7 +16,7 @@ export function tagMode({
   dateFormat?: DateFormat;
   indexing: boolean;
 }): number | boolean {
-  const objectFromTag = tagCrawler(object, searchNode.tag, searchNode.alias);
+  const objectFromTag = tagCrawler(object, searchNode.tag, searchNode.aliases);
   const stringifiedObject = getTextCrawler(objectFromTag);
 
   const modeResult = <number[]>searchNode.childs
