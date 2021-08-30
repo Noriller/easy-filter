@@ -1,7 +1,7 @@
 import { shouldReturn } from './filterCore/shouldReturn';
 import { searchParser } from './searchParser/searchParser';
 import { addAliases } from './searchParser/tagAliases';
-import { FilterOptions, ParsedPart, TagAliases } from './shared/shapes';
+import { ParsedPart, SetupOptions, TagAliases } from './shared/shapes';
 import { removeDiacritics } from './utils/removeDiacritics';
 
 export default function EasyFilter({
@@ -10,7 +10,7 @@ export default function EasyFilter({
   tagAliases = {},
 }: {
   source: Array<unknown>;
-  filterOptions?: FilterOptions;
+  filterOptions?: SetupOptions;
   tagAliases?: TagAliases;
 }) {
   return {
@@ -21,7 +21,7 @@ export default function EasyFilter({
 function search(
   string: string,
   source: Array<unknown>,
-  filterOptions: FilterOptions,
+  filterOptions: SetupOptions,
   tagAliases: TagAliases,
 ) {
   const { options, searchTree } = searchParser(string, filterOptions);

@@ -38,12 +38,15 @@ export interface ParsedTag extends ParsedPart {
 export type RangePayload = [number, number];
 export type DateRangePayload = [Date, Date];
 
-export interface FilterOptions {
+export interface SetupOptions {
   dateFormat?: DateFormat;
-  dateFormatSearch?: DateFormat;
   normalize?: boolean;
   limit?: number;
   indexing?: boolean;
+}
+
+export interface FilterOptions extends SetupOptions {
+  dateFormatSearch?: DateFormat;
 }
 
 export type DateFormat =
