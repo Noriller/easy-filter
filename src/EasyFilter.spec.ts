@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import EasyFilter from './EasyFilter';
-// const poke1 = require('../__Test__/pokeAPISlice1.json');
 const poke10 = require('../__Test__/pokeAPISlice10.json');
-// const poke151 = require('../__Test__/pokeAPISlice151.json');
 
 describe('EasyFilter', () => {
   const ef = EasyFilter({ source: poke10 });
