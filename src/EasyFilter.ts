@@ -4,15 +4,16 @@ import { addAliases } from './searchParser/tagAliases';
 import { ParsedPart, SetupOptions, TagAliases } from './shared/shapes';
 import { removeDiacritics } from './utils/removeDiacritics';
 
-export default function EasyFilter({
-  source,
-  filterOptions = {},
-  tagAliases = {},
-}: {
-  source: Array<unknown>;
-  filterOptions?: SetupOptions;
-  tagAliases?: TagAliases;
-}) {
+export default function EasyFilter(
+  source: Array<unknown>,
+  {
+    filterOptions = {},
+    tagAliases = {},
+  }: {
+    filterOptions?: SetupOptions;
+    tagAliases?: TagAliases;
+  } = {},
+) {
   return {
     search: (string) => search(string, source, filterOptions, tagAliases),
   };
