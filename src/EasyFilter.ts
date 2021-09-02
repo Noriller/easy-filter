@@ -1,20 +1,61 @@
 import { shouldReturn } from './filterCore/shouldReturn';
 import { searchParser } from './searchParser/searchParser';
 import { addAliases } from './searchParser/tagAliases';
-import { ParsedPart, SetupOptions, TagAliases } from './shared/shapes';
+import {
+  ParsedPart,
+  SetupOptions,
+  TagAliases,
+  OptionalParameters,
+} from './shared/shapes';
 import { removeDiacritics } from './utils/removeDiacritics';
 
+/**
+ * EasyFilter is a minimal setup filter.
+ *
+ * The minimal setup is just passing the source as an array.
+ *
+ * After that, call `search` passing your query string and use the result.
+ *
+ * @param source - an array of objects
+ * @example
+ * ```js
+  // Minimal example:
+  const filter = EasyFilter(sourceArray)
+  const filteredResult = filter.search('your query')
+ * ```
+ * @description
+ * You can also pass options that will define default behaviors.
+ *
+ * @example
+ * ```js
+  // Using All Options:
+  const filter = EasyFilter(sourceArray, {
+    filterOptions: {
+      dateFormat: 'DD-MM-YYYY',
+      normalize: true,
+      indexing: true,
+      limit: 10,
+    },
+    tagAliases: {
+      tag: ['tag1', 'tag2', 'tag3'],
+    })
+ * ```
+ */
 export default function EasyFilter(
   source: Array<unknown>,
-  {
-    filterOptions = {},
-    tagAliases = {},
-  }: {
-    filterOptions?: SetupOptions;
-    tagAliases?: TagAliases;
-  } = {},
+  { filterOptions = {}, tagAliases = {} }: OptionalParameters = {},
 ) {
   return {
+    /**
+     * Call `search` with your query string to filter the source array.
+     * @param string - Your query string.
+     * @returns the filtered source array.
+     *
+     * @remarks
+     * Returns objects with the reference of the source unless using indexing.
+     *
+     * @see README for everything that can be passed in the query string.
+     */
     search: (string) => search(string, source, filterOptions, tagAliases),
   };
 }
