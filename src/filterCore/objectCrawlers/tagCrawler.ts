@@ -5,7 +5,7 @@ function tagCrawlerWrapper(
   tag: string,
   aliases?: TagAliases,
 ): unknown[] {
-  if (!tag || !object) return [];
+  if (!tag || object === undefined || object === null) return [];
 
   const baseTags = tag.split('.');
 
@@ -16,7 +16,7 @@ function tagCrawlerWrapper(
     ),
   ]
     .flat(Infinity)
-    .filter(Boolean);
+    .filter((x) => x !== undefined && x !== null);
 }
 
 function tagCrawlerRecursion(
@@ -24,7 +24,9 @@ function tagCrawlerRecursion(
   aliases: TagAliases,
   tags: string[],
 ): unknown {
-  if (!tags || !object || tags.length === 0) return object;
+  if (!tags || object === undefined || object === null || tags.length === 0)
+    return object;
+
   const [firstTag, ...restTags] = tags;
 
   if (firstTag === '*' && Array.isArray(object)) {
@@ -42,10 +44,10 @@ function tagCrawlerRecursion(
 }
 
 function aliasesTags(aliases: TagAliases, tag: string): string[] {
-  return aliases ? getaliasesTags(aliases, tag) : [];
+  return aliases ? getAliasesTags(aliases, tag) : [];
 }
 
-function getaliasesTags(aliases: TagAliases, tag: string): string[] {
+function getAliasesTags(aliases: TagAliases, tag: string): string[] {
   const fullMatch = aliases[tag];
   return fullMatch ? fullMatch : [];
 }

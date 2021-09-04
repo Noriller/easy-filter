@@ -33,6 +33,7 @@ describe('shouldReturn', () => {
       someNumber1: 50,
       someNumber2: 100,
     },
+    notSoInvalidTag: false,
   };
 
   describe('without indexing', () => {
@@ -104,6 +105,12 @@ describe('shouldReturn', () => {
 
         it('should find the value and return false', () => {
           const { searchTree } = searchParser('firstTag:NULL');
+          const result = shouldReturn({ object, searchTree });
+          expect(result).toBe(false);
+        });
+
+        it('should find a falsy value and return false', () => {
+          const { searchTree } = searchParser('notSoInvalidTag:NULL');
           const result = shouldReturn({ object, searchTree });
           expect(result).toBe(false);
         });
