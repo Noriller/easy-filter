@@ -38,7 +38,8 @@ import { removeDiacritics } from './utils/removeDiacritics';
     },
     tagAliases: {
       tag: ['tag1', 'tag2', 'tag3'],
-    })
+    }
+  })
  * ```
  */
 export default function EasyFilter(
