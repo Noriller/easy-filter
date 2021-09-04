@@ -109,14 +109,142 @@ And if you're seeing yourself here... then you probably should use it.
 
 * This one is a little relative: if you need maximum performance... well, test it out if it work for you! The more options you use and the more your data objects branches out on objects upon objects... the more time it needs to traverse everything. (And even then, I believe you can use it for prototyping and/or as a crutch while you make your own custom filter. Don't worry, I understand. 😉)
 
-The trade off is clear: we give you a powerful engine that will return the data following what you're searched for, but if comes at a cost. For your everyday use, you're probably fine and your users will love it. 😎
+The trade off is clear: we give you a powerful engine that will return the data following what you're searched for, but it comes at a cost. 
+
+For your everyday use, you're probably fine and your users will love it. 😎
 
 (As a side note, I would love to know how EasyFilter fare against any other solution you might try. ❤😍❤)
 
 ## EasyFilter Operators
 
+Most of this should be intuitive for most users... that's what I was aiming for after all. 🧐
+### OR query
 
+Any word or operators are, primarily and lastly, treated as `OR` queries.
 
+To be a match, the data needs only to match any of them to be returned.
+
+#### OR Example:
+```js
+filter.search('word1 word2 tag:value "quoted value"')
+```
+`word1`, `word2`, `tag:value` and `"quoted value"` each become separated entities and a match of any one of those will return.
+
+### AND query
+
+Anything inside quotes (either double `"` or single `'`) will be treated as one entity.
+
+EasyFilter relies heavily on recursion and this one entity will be then split into multiple entities, following those entities rules.
+
+To be a match, the data must get a match from each subquery inside quotes.
+
+#### AND Remarks
+
+An `AND` query can contain: `OR`, `TAG` and even nested `AND` queries.
+
+In case of nested `TAG` and `AND` queries, the nested quote must not match the parent quote.
+
+#### AND Example:
+```js
+filter.search('"quoted value tag:value"')
+```
+`quoted`, `value` and `tag:value` first are an `AND` query and will match only if all of the subqueries match.
+
+In this case, both `quoted` and `value` become `OR` queries and `tag:value` becomes `TAG` query.
+
+### TAG query
+
+TAG here is equivalent to any `key` of a Javascript object.
+
+`TAG`, like `AND` queries, return subqueries where they target a slice of the object, namely the `key`.
+
+To be a match, the data must get a match from the subquery after the `TAG`.
+
+#### TAG Remarks
+
+A `TAG` query can contain: `OR`, `AND` and then `NULL` and `RANGE`/`DATE_RANGE` queries.
+
+`TAG` doesn't support nested `TAG` queries. (As of now.)
+
+#### Types of TAG queries with Examples:
+##### TAG - Simple
+```js
+filter.search('tag:value')
+```
+Just the `TAG` followed by a colon and the `value`.
+
+`value` in this example will become an `OR` query.
+
+##### TAG - OR
+```js
+filter.search('tag:(value1 value2 value3)')
+```
+By using brackets, you can have an `OR` query with multiple values at once.
+
+##### TAG - AND
+```js
+filter.search('tag:"value1 value2 value3"')
+```
+By using quotes (single/double), you can have an `AND` query.
+
+##### TAG - Null Values
+```js
+filter.search('tag:null tag:nil tag:none tag:nothing')
+```
+By passing, alone, any of the words: `NULL`, `NIL`, `NONE` or `NOTHING` as the value of the `TAG`, it will match only if the `key` doesn't exist in the object (or if the key is `null` or `undefined`).
+
+`tag:(nothing)`, in contrast, will match only if the `key` contains the string "nothing".
+
+##### TAG - Chaining Tags
+```js
+filter.search('tag.subTag.thirdTag:value')
+```
+You can chain tags together using a `.` (full stop/period).
+
+This would be equivalent to nested `TAGs`. (Nested tags aren't supported.)
+
+##### TAG - Arrays
+```js
+filter.search('tag.0:value tag2.*.subTag:value')
+```
+While the most common use case for EasyFilter would be, indeed, common objects (think JSON Objects with key/value pairs), arrays are supported.
+
+The main difference is that the `key` they use are numerical and ordered.
+
+`tag.0:value` will search inside the "tag" key, then in the element "0" for the "value".
+
+`tag2.*.subTag:value` will search inside the "tag2" key, then in ALL elements for the "subTag" and then for the "value".
+
+So, if the position in the array matters, use the index. Otherwise, use `*` (asterisk) to search all elements in the array.
+
+##### TAG - RANGE
+```js
+filter.search('tag:range(0,5)')
+```
+By passing, alone, the operator `RANGE()` you can pass one or two arguments that will filter based on the numbers.
+
+`RANGE` can only be used inside `TAG` and with `number` values.
+
+The first argument is the lower bound (`-Infinity`) and the second argument is the upper bound (`Infinity`).
+
+Passing only one argument sets only the lower bound. To set only the upper bound, pass it empty: `RANGE(,5)`.
+
+##### TAG - DATE_RANGE
+```js
+filter.search('tag:dateRange(2020-05-01, 2021-09-05)')
+```
+By passing, alone, the operator `DATERANGE()` you can pass one or two arguments that will filter based on the dates.
+
+`DATERANGE` can only be used inside `TAG` and with `date` values.
+
+The first argument is the lower bound (`0000-01-01`) and the second argument is the upper bound (`9999-01-01`).
+
+Passing only one argument sets only the lower bound. To set only the upper bound, pass it empty: `DATERANGE(,2021-09-05)`.
+
+More on accepted `Date Formats` in [EasyFilter Options](#easyfilter-options), but you can use the common formats like `DD/MM/YYYY` and `MM/DD/YYYY` as long as you pass it as an `OPTION`. If no `Date Format` is provided, the Javascript default implementation of `new Date('your date string')` will be used.
+
+### NOT query
+### EasyFilter Options
 
 ## What's next?
 
