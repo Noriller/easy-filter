@@ -41,7 +41,7 @@ const EasyFilter = require('EasyFilter')
 
 That's it! 🧙‍♂️
 
-Just check the section [EasyFilter Operators](#easyfilter-operators) to see all that you can pass to the filter, the real ✨magic✨ is there!
+Check out the section [EasyFilter Operators](#easyfilter-operators) to see all that you can pass to the filter, the real ✨magic✨ is there!
 
 #### Really? That's it?
 
@@ -66,11 +66,11 @@ const filteredResult = filter.search('your query')
 It's still that simple. 👨‍💻
 
 All the options will be explained in [EasyFilter Options](#easyfilter-options).
-And most of them you can just pass in the `search` 🔎 string when you need.
+And most of them you can pass in the `search` 🔎 string when you need.
 
 ## Inspirations and motivation
 
-In corporate scenarios, sometimes we have too much information 😵. We make pages with endless columns and if we need to filter that date, we either use something generic like `Object.keys(object).join(' ').includes('string')` or we have to make a custom search... for. each. table. 😫
+In corporate scenarios, sometimes we have too much information 😵. We make pages with endless columns and if we need to filter that data, we either use something generic like `Object.keys(object).join(' ').includes('string')` or we have to make a custom search... for. each. table. 😫
 
 Meanwhile I saw awesome (and probably custom solutions) in things we use everyday.
 
@@ -91,25 +91,25 @@ Then it's up to you to offer a UI for what makes sense for your data. And it's s
 
 ## Why should you use
 
-Unless searching and filtering data IS your business... each table, each data source you have that you need to filter based on any criteria could be another source of frustation. 👨‍🏭
+Unless searching and filtering data IS your business... each table, each data source you need to filter based on any criteria could be another source of frustration. 👨‍🏭
 
 While sometimes this can be easy as `dataSource.filter(x => x.attribute === 'something')`, usually it's more complicated than that.
 
 And when you have to factor what the users might want at any given time, it can become a nightmare. 😫
 
-And if you're seeing yourself here. Then you probably should use it.
+And if you're seeing yourself here... then you probably should use it.
 
 ## When should you use, or better yet, when you shouldn't use?
 
-If something like `Object.keys(object).join(' ').includes('string')` or `dataSource.filter(x => x.attribute === 'something')` is enough for your need, you probably wouldn't want to bother using it.
+* If something like `Object.keys(object).join(' ').includes('string')` or `dataSource.filter(x => x.attribute === 'something')` is enough for your need, you probably wouldn't want to bother using it.
 
-EasyFilter is not a fuzzy filter (at least not yet, who knows? 🤔), so if you're expecting clumsy typers searching your data... they might have a hard time.
+* EasyFilter is not a fuzzy filter (at least not yet, who knows? 🤔), so if you're expecting clumsy typers searching your data... they might have a hard time.
 
-EasyFilter also don't care about upper or lowercase and/or ordering of the words in your queries (again: at least not yet), so if that's important... I'm sorry? 🙇‍♂️
+* EasyFilter also don't care about upper or lowercase and/or ordering of the words in your queries (again: at least not yet), so if that's important... I'm sorry? 🙇‍♂️
 
-This one is a little relative: if you need maximum performance... well, test it out if it work for you! The more options you use and the more your data objects branches out on objects upon objects... the more time it needs to traverse everything. (And even then, I believe you can use it for prototyping and/or as a crutch while you make your own custom filter. Don't worry, I understand. 😉)
+* This one is a little relative: if you need maximum performance... well, test it out if it work for you! The more options you use and the more your data objects branches out on objects upon objects... the more time it needs to traverse everything. (And even then, I believe you can use it for prototyping and/or as a crutch while you make your own custom filter. Don't worry, I understand. 😉)
 
-The tradeoff is clear, we give you a powerful engine that will return the data following what you're searched for, but if comes at a cost. For your everyday use, you're probably fine and your users will love it. 😎
+The trade off is clear: we give you a powerful engine that will return the data following what you're searched for, but if comes at a cost. For your everyday use, you're probably fine and your users will love it. 😎
 
 (As a side note, I would love to know how EasyFilter fare against any other solution you might try. ❤😍❤)
 
@@ -120,9 +120,9 @@ The tradeoff is clear, we give you a powerful engine that will return the data f
 
 ## What's next?
 
-Here's something you can expect in the near future:
+Here's something you can expect in the future:
 
-* Streams support ⚡: be it from an API or from a data source, data usually comes as a stream. If the Javascript Engine can handle streaming just fine, why wait for it to buffer everything?
+* Streams support ⚡: be it from an API or from a data source, data usually comes as a stream. If the Javascript Engine can handle streaming fine, why wait for it to buffer everything?
 
 ## There's a problem or it could be better
 
