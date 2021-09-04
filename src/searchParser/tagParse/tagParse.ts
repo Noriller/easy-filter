@@ -58,7 +58,7 @@ const tagsReducer = (
 
     const payload = tagPayloadWithBrackers || tagPayloadWithoutBrackers;
 
-    const tagNullValuesRegex = /^(NULL|NIL|NONE|NOTHING)$/;
+    const tagNullValuesRegex = /^(NULL|NIL|NONE|NOTHING)$/i;
 
     const tagMode = tagNullValuesRegex.test(payload) ? 'TAG_NULL' : 'TAG';
 
