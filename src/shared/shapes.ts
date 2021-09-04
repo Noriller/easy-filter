@@ -116,7 +116,7 @@ export interface SetupOptions {
    */
   limit?: number;
   /**
-   * If the returned opject should have a indexing key added to it.
+   * If the returned object should have a indexing key added to it.
    *
    * @defaultValue False - and the returned object is a reference to the original source
    * @remarks
