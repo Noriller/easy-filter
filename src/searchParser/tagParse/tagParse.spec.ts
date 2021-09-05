@@ -181,5 +181,22 @@ describe('tagParse', () => {
         parsedSearch: parsedTag,
       });
     });
+
+    it('should parse tag for actual "null" value', () => {
+      const searchWithTag = 'search with tag:(NULL)';
+      const searchWithoutParsedPart = 'search with';
+      const parsedTag: ParsedTag[] = [
+        {
+          payload: 'NULL',
+          tag: 'tag',
+          mode: 'TAG',
+        },
+      ];
+
+      expect(tagParse(searchWithTag)).toEqual({
+        search: searchWithoutParsedPart,
+        parsedSearch: parsedTag,
+      });
+    });
   });
 });

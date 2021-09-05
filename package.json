@@ -1,14 +1,19 @@
 {
-  "name": "easy-filter",
-  "private": true,
-  "version": "0.0.0",
-  "description": "",
+  "name": "@noriller/easy-filter",
+  "private": false,
+  "version": "0.0.2",
+  "description": "EasyFilter is a lightweight, zero dependencies, minimal setup, intuitive and powerful filter for all your filter needs.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --fix .",
     "test": "jest --watch --verbose",
     "test:cov": "jest --coverage --silent --watchAll",
-    "prepare": "husky install"
+    "prepare": "husky install && npx rimraf dist",
+    "clean": "npx rimraf dist",
+    "build": "tsc",
+    "prepublishOnly": "tsc"
   },
   "dependencies": {},
   "devDependencies": {
@@ -33,6 +38,23 @@
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.3"
   },
+  "author": "Bruno Noriller <brunonoriller@gmail.com> (https://github.com/Noriller)",
+  "bugs": {
+    "url": "https://github.com/Noriller/easy-filter/issues"
+  },
+  "homepage": "https://github.com/Noriller/easy-filter",
+  "keywords": [
+    "filter",
+    "filter-lists",
+    "query",
+    "query-parser",
+    "javascript",
+    "match",
+    "matching-engine",
+    "search",
+    "search-engine",
+    "sort"
+  ],
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -60,5 +82,12 @@
   },
   "lint-staged": {
     "*.{js,ts}": "yarn lint"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noriller/easy-filter.git"
+  },
+  "files": [
+    "dist/"
+  ]
 }

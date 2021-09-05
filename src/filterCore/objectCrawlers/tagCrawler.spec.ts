@@ -82,6 +82,7 @@ describe('tagCrawler', () => {
         1: { value: 'string 1' },
         2: ['a', 'b', 'c'],
       },
+      tagWithFalsyValue: 0,
     };
 
     it('should return the entire subobject', () => {
@@ -113,6 +114,11 @@ describe('tagCrawler', () => {
       expect(tagCrawler(complexObject, tags)).toEqual([
         complexObject.thirdTag[1],
       ]);
+    });
+
+    it('should return a falsy value', () => {
+      const tags = 'tagWithFalsyValue';
+      expect(tagCrawler(complexObject, tags)).toEqual([0]);
     });
 
     describe('searching inside subarray', () => {

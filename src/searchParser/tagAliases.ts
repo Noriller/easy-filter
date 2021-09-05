@@ -1,30 +1,33 @@
-import { ParsedPart, TagAlias, ParsedTag } from '../shared/shapes';
+import { ParsedPart, TagAliases, ParsedTag } from '../shared/shapes';
 
-export function addAliases(node: ParsedPart, tagAlias: TagAlias): ParsedPart {
+export function addAliases(
+  node: ParsedPart,
+  tagAliases: TagAliases,
+): ParsedPart {
   if (node.mode === 'TAG' || node.mode === 'TAG_NULL') {
-    (<ParsedTag>node).alias = getAliases({
+    (<ParsedTag>node).aliases = getAliases({
       tag: (<ParsedTag>node).tag,
-      tagAlias,
+      tagAliases,
     });
   }
-  node.childs = node.childs?.map((c) => addAliases(c, tagAlias));
+  node.childs = node.childs?.map((c) => addAliases(c, tagAliases));
   return node;
 }
 
 function getAliases({
   tag,
-  tagAlias,
+  tagAliases,
 }: {
   tag: string;
-  tagAlias: TagAlias;
-}): TagAlias {
-  const aliasArr = Object.entries(tagAlias)
+  tagAliases: TagAliases;
+}): TagAliases {
+  const aliasesArr = Object.entries(tagAliases)
     .map(([key, value]) =>
-      tag.includes(key) ? ({ [key]: value } as TagAlias) : undefined,
+      tag.includes(key) ? ({ [key]: value } as TagAliases) : undefined,
     )
     .filter(Boolean);
-  return aliasArr.reduce(
-    (acc, alias) => ({ ...acc, ...alias }),
-    {} as TagAlias,
+  return aliasesArr.reduce(
+    (acc, aliases) => ({ ...acc, ...aliases }),
+    {} as TagAliases,
   );
 }

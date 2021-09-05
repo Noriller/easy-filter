@@ -1,52 +1,54 @@
-import { TagAlias } from '../../shared/shapes';
+import { TagAliases } from '../../shared/shapes';
 
 function tagCrawlerWrapper(
   object: unknown,
   tag: string,
-  alias?: TagAlias,
+  aliases?: TagAliases,
 ): unknown[] {
-  if (!tag || !object) return [];
+  if (!tag || object === undefined || object === null) return [];
 
   const baseTags = tag.split('.');
 
   return [
-    tagCrawlerRecursion(object, alias, baseTags),
-    aliasesTags(alias, tag).map((aliasTag) =>
-      tagCrawlerWrapper(object, aliasTag, alias),
+    tagCrawlerRecursion(object, aliases, baseTags),
+    aliasesTags(aliases, tag).map((aliasesTag) =>
+      tagCrawlerWrapper(object, aliasesTag, aliases),
     ),
   ]
     .flat(Infinity)
-    .filter(Boolean);
+    .filter((x) => x !== undefined && x !== null);
 }
 
 function tagCrawlerRecursion(
   object: unknown,
-  alias: TagAlias,
+  aliases: TagAliases,
   tags: string[],
 ): unknown {
-  if (!tags || !object || tags.length === 0) return object;
+  if (!tags || object === undefined || object === null || tags.length === 0)
+    return object;
+
   const [firstTag, ...restTags] = tags;
 
   if (firstTag === '*' && Array.isArray(object)) {
     return object
-      .map((ea) => tagCrawlerRecursion(ea, alias, restTags))
+      .map((ea) => tagCrawlerRecursion(ea, aliases, restTags))
       .filter(Boolean);
   }
 
   return [
-    tagCrawlerRecursion(object[firstTag], alias, restTags),
-    aliasesTags(alias, firstTag).map((aliasTag) =>
-      tagCrawlerWrapper(object, aliasTag, alias),
+    tagCrawlerRecursion(object[firstTag], aliases, restTags),
+    aliasesTags(aliases, firstTag).map((aliasesTag) =>
+      tagCrawlerWrapper(object, aliasesTag, aliases),
     ),
   ];
 }
 
-function aliasesTags(alias: TagAlias, tag: string): string[] {
-  return alias ? getAliasTags(alias, tag) : [];
+function aliasesTags(aliases: TagAliases, tag: string): string[] {
+  return aliases ? getAliasesTags(aliases, tag) : [];
 }
 
-function getAliasTags(alias: TagAlias, tag: string): string[] {
-  const fullMatch = alias[tag];
+function getAliasesTags(aliases: TagAliases, tag: string): string[] {
+  const fullMatch = aliases[tag];
   return fullMatch ? fullMatch : [];
 }
 

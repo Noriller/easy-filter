@@ -25,25 +25,7 @@ export function optionsParse(search: string): ParsedOptions {
     );
 
     const parsedOptions: FilterOptions = optionParsed.reduce(
-      (filterOptions, option) => {
-        const [optionLabel, value] = option.split(':');
-
-        if (/normalize/i.test(optionLabel))
-          filterOptions.normalize =
-            (value && parseStringToBoolean(value)) ?? true;
-        if (/index/i.test(optionLabel))
-          filterOptions.indexing =
-            (value && parseStringToBoolean(value)) ?? true;
-        if (/limit/i.test(optionLabel))
-          filterOptions.limit = parseInt(value) || 0;
-        if (/dateFormat/i.test(optionLabel)) {
-          const validFormats = ['YYYYMMDD', 'DDMMYYYY', 'MMDDYYYY', 'YYYYDDMM'];
-          if (validFormats.includes(value.replace(dateSplittersGlobal, '')))
-            filterOptions.dateFormatSearch = value as DateFormat;
-        }
-
-        return filterOptions;
-      },
+      optionsReducer,
       {} as FilterOptions,
     );
 
@@ -57,4 +39,24 @@ export function optionsParse(search: string): ParsedOptions {
       parsedOptions: null,
     };
   }
+}
+
+function optionsReducer(filterOptions: FilterOptions, option: string) {
+  const [optionLabel, value] = option.split(':');
+
+  if (/normalize/i.test(optionLabel))
+    filterOptions.normalize = (value && parseStringToBoolean(value)) ?? true;
+
+  if (/index/i.test(optionLabel))
+    filterOptions.indexing = (value && parseStringToBoolean(value)) ?? true;
+
+  if (/limit/i.test(optionLabel)) filterOptions.limit = parseInt(value) || 0;
+
+  if (/dateFormat/i.test(optionLabel)) {
+    const validFormats = ['YYYYMMDD', 'DDMMYYYY', 'MMDDYYYY', 'YYYYDDMM'];
+    if (validFormats.includes(value.replace(dateSplittersGlobal, '')))
+      filterOptions.dateFormatSearch = value as DateFormat;
+  }
+
+  return filterOptions;
 }

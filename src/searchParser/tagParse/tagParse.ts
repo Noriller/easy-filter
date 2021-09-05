@@ -51,16 +51,16 @@ const tagsReducer = (
     };
   } else {
     const [tag, tagString] = tagPart.split(':');
+
+    const tagNullValuesRegex = /^(NULL|NIL|NONE|NOTHING)$/i;
+    const tagMode = tagNullValuesRegex.test(tagString) ? 'TAG_NULL' : 'TAG';
+
     const middleOfBracketsOrItselfRegex = /(?:(?:^\()(.*?)(?:\)$))|(^.*?$)/i;
     const [tagPayloadWithoutBrackers, tagPayloadWithBrackers] = tagString.match(
       middleOfBracketsOrItselfRegex,
     );
 
     const payload = tagPayloadWithBrackers || tagPayloadWithoutBrackers;
-
-    const tagNullValuesRegex = /^(NULL|NIL|NONE|NOTHING)$/;
-
-    const tagMode = tagNullValuesRegex.test(payload) ? 'TAG_NULL' : 'TAG';
 
     return {
       reducedString: cleanString(reducedString, tagPart),
