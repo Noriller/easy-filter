@@ -241,7 +241,7 @@ The first argument is the lower bound (`0000-01-01`) and the second argument is 
 
 Passing only one argument sets only the lower bound. To set only the upper bound, pass it empty: `DATERANGE(,2021-09-05)`.
 
-More on accepted `Date Formats` in [Date Format (Query)](#date-format-query), but you can use all the common formats like `DD/MM/YYYY`, `MM/DD/YYYY` and `YYYY/MM/DD` as long as you pass it as an `OPTION`. If no `Date Format` is provided, the Javascript default implementation of `new Date('your date string')` will be used.
+More on accepted `Date Formats` in [Date Format (Query)](#dateformat-query), but you can use all the common formats like `DD/MM/YYYY`, `MM/DD/YYYY` and `YYYY/MM/DD` as long as you pass it as an `OPTION`. If no `Date Format` is provided, the Javascript default implementation of `new Date('your date string')` will be used.
 
 ### NOT query
 
@@ -274,10 +274,10 @@ There's three types of options:
   * [Limit](#limit)
 * Those that can only be passed in the setup:
   * [Filter Options](#filter-options)
-    * [Date Format (Setup)](#date-format-setup)
+    * [Date Format (Setup)](#dateformat-setup)
   * [Tag Aliases](#tag-aliases)
 * Those that can only be passed with the query:
-  * [Date Format (Query)](#date-format-query)
+  * [Date Format (Query)](#dateformat-query)
 #### OPTION keyword
 
 Using the syntax `OPTION()` or `OPTIONS()` you can pass the following options inside your search string.
