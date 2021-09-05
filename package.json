@@ -1,9 +1,10 @@
 {
   "name": "easy-filter",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "description": "EasyFilter is a lightweight, zero dependencies, minimal setup, intuitive and powerful filter for all your filter needs.",
-  "main": "./dist",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --fix .",
@@ -11,7 +12,8 @@
     "test:cov": "jest --coverage --silent --watchAll",
     "prepare": "husky install",
     "clean": "npx rimraf dist",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "dependencies": {},
   "devDependencies": {
