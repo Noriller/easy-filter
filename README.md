@@ -241,7 +241,7 @@ The first argument is the lower bound (`0000-01-01`) and the second argument is 
 
 Passing only one argument sets only the lower bound. To set only the upper bound, pass it empty: `DATERANGE(,2021-09-05)`.
 
-More on accepted `Date Formats` in [EasyFilter Options](#easyfilter-options), but you can use the common formats like `DD/MM/YYYY` and `MM/DD/YYYY` as long as you pass it as an `OPTION`. If no `Date Format` is provided, the Javascript default implementation of `new Date('your date string')` will be used.
+More on accepted `Date Formats` in [Date Format (Query)](#date-format-query), but you can use all the common formats like `DD/MM/YYYY`, `MM/DD/YYYY` and `YYYY/MM/DD` as long as you pass it as an `OPTION`. If no `Date Format` is provided, the Javascript default implementation of `new Date('your date string')` will be used.
 
 ### NOT query
 
@@ -266,6 +266,130 @@ filter.search('not("quoted value tag:value")')
 Any element with `quoted`, `value` and `tag:value` will not be returned.
 
 ### EasyFilter Options
+
+There's three types of options:
+* Those that can be passed any time:
+  * [Normalize](#normalize)
+  * [Indexing](#indexing)
+  * [Limit](#limit)
+* Those that can only be passed in the setup:
+  * [Filter Options](#filter-options)
+    * [Date Format (Setup)](#date-format-setup)
+  * [Tag Aliases](#tag-aliases)
+* Those that can only be passed with the query:
+  * [Date Format (Query)](#date-format-query)
+#### OPTION keyword
+
+Using the syntax `OPTION()` or `OPTIONS()` you can pass the following options inside your search string.
+
+The `OPTION` keyword is parsed first, it will be just removed if nested in other queries and anything else inside will be either parsed as an option or ignored.
+
+##### DATEFORMAT (Query)
+
+When passed as an `OPTION`, `DateFormat` will be used to parse the dates used in [`DATE_RANGE`](#tag---date_range).
+
+This way your users can use their locale date format in their query.
+
+When using `DATE_RANGE`, if no `DateFormat` is passed as an option the Javascript default implementation of `new Date('your date string')` will be used.
+
+The formats can be: `YYYY-MM-DD`, `DD-MM-YYYY` and `MM-DD-YYYY` while the separators can be: `-`, `.`, `,` and `/`.
+
+###### DateFormat Example
+```js
+filter.search('tag:dateRange(30-12-2020,30-12-2022) option(dateFormat:DD.MM.YYYY)')
+```
+
+##### NORMALIZE
+
+When the `NORMALIZE` option is used, `EasyFilter` will discard/ignore every and all diacritics when making comparisons. It's FALSE by default.
+
+This means that with `NORMALIZE`: `Crème brûlée` is equal to `Creme brulee`.
+
+`EasyFilter` uses the [`string.normalize('NFD')`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize) javascript API to decompose the strings and then remove all [Combining Diacritical Marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks).
+
+`NORMALIZE` uses a `boolean` flag, and when used in `OPTIONS` alone like `option(normalize)` it will assume the TRUE value, but you can explicitly use: `normalize:true`.
+
+You can also use `normalize:false` to disable a [setup default](#filter-options) normalization for a specific query.
+
+##### INDEXING
+
+When the `INDEXING` option is used, `EasyFilter` will use a numerical ranking system and if there's a match, it will return a copy of the element with an additional key `_EasyFilterIndex` that will have a "relevance score" that you can use to sort the results. It's FALSE by default.
+
+`INDEXING` uses a `boolean` flag, and when used in `OPTIONS` alone like `option(index)` or `option(indexing)` it will assume the TRUE value, but you can explicitly use: `index:true`.
+
+You can also use `normalize:false` to disable a [setup default](#filter-options) indexing for a specific query.
+
+###### How it indexing works in EasyFilter
+
+`EasyFilter` gives a number based on the types of queries and multiplies the results returned by nested queries.
+* OR = 1
+* AND = 3
+* TAG = 5
+* RANGE/DATE_RANGE/NULL = 10
+
+This way, using more generic queries, those with the more specific parameters will have a higher indexing value.
+
+##### LIMIT
+
+When the `LIMIT` option is used, `EasyFilter` will return only the `LIMIT` number of results. It's Zero/FALSE by default.
+
+`LIMIT` needs a `number` value, when used in `OPTIONS` you need to also pass a `number` value: `option(limit:1)`.
+
+You can also use `limit:0` to disable a [setup default](#filter-options) limit for a specific query.
+#### Setup Options
+
+In the setup you may pass:
+##### Filter Options
+
+The following options works the same way as if passing in the query:
+  * [Normalize](#normalize)
+  * [Indexing](#indexing)
+  * [Limit](#limit)
+
+By passing it in the setup, they will be used in every `search`.
+
+###### DATEFORMAT (Setup)
+
+When passed in the `Setup`, `DateFormat` will be used to parse the dates in your `Source Array`.
+
+If no `DateFormat` is passed in the `setup`, the Javascript default implementation of `new Date('your date string')` will be used.
+
+If that default implementation wouldn't work with your `source array`, then provide a `DateFormat`.
+
+The formats can be: `YYYY-MM-DD`, `DD-MM-YYYY` and `MM-DD-YYYY` while the separators can be: `-`, `.`, `,` and `/` (you can use the provided typing).
+
+##### Tag Aliases
+
+Pass `TAG Aliases` in the setup to expose to users more friendly (or broader) terms that they can call your data using `TAG`.
+
+`Tag Aliases` should be a dictionary with `key`/`value` pairs where the `key` is what your users can use and the `value` is a array of strings that will refer to your actual data.
+
+Our `data sources` might not always be the most user friendly, or something important might be nested where users `Tag Aliases` couldn't possibly know. This is where you use `Tag Aliases`.
+
+###### Aliases Examples
+
+```js
+const filter = EasyFilter(sourceArray, {
+    tagAliases: {
+      // if you want more friendly aliases
+      data: ['DT_0001X420'],
+      name: ['nm_first', 'nm_last'],
+      // if the important data is nested
+      age: ['person.info.age'],
+      // if your users expect to find everything related to a word
+      address: ['address', 'city', 'country', 'province', 'zip_code'],
+      // and you have no idea which words they will search for
+      // just create multiple aliases with the same tags
+      city: ['address', 'city', 'country', 'province', 'zip_code'],
+      country: ['address', 'city', 'country', 'province', 'zip_code'],
+      province: ['address', 'city', 'country', 'province', 'zip_code'],
+      zip: ['address', 'city', 'country', 'province', 'zip_code'],
+      location: ['address', 'city', 'country', 'province', 'zip_code'],
+      where: ['address', 'city', 'country', 'province', 'zip_code'],
+      position: ['address', 'city', 'country', 'province', 'zip_code'],
+    }
+  })
+```
 
 ## What's next?
 
