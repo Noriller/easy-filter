@@ -410,7 +410,21 @@ Since it supports any kind of data or queries... who knows what can happen?
 
 I do have one remark to say: It will probably err on the side of caution... maybe returning more than you might have expected and when using the negation query, filtering more than intended, so keep that in mind.
 
-## The masterminds behind EasyFilter (AKA Contributors)
+## Work with me!
 
+https://www.linkedin.com/in/noriller/
+
+### Hit me up at Discord!
+
+https://discord.gg/XtNPk7HeCa
+### Or Donate:
+
+* [$5 Nice job! Keep it up.](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0&amount=5)
+* [$10 I really liked that, thank you!](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0&amount=10)
+* [$42 This is exactly what I was looking for.](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0&amount=42)
+* [$1K WOW. Did not know javascript could do that!](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0&amount=1000)
+* [$5K I need something done ASAP! Can you do it for yesterday?](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0&amount=5000)
+* [$10K Please consider this: quit your job and work with me!](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0&amount=10000)
+* [$??? Shut up and take my money!](https://www.paypal.com/donate/?business=VWNG7KZD9SS4S&no_recurring=0)
 
 ## That’s it! 👏
