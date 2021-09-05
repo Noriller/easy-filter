@@ -12,25 +12,21 @@ It's as easy as this:
 
 ## Get Started
 
-### **As of 2021-09-04 the package is still not available, please wait patiently**
-
 ### Use your choice of package manager
 
-`npm install EasyFilter`
+`npm install @noriller/easy-filter`
 
-`yarn install EasyFilter`
+`yarn add @noriller/easy-filter`
 
 ### Then import it with the syntax of your choice
 
 ```js
-import EasyFilter from 'EasyFilter'
+import EasyFilter from '@noriller/easy-filter'
 ```
 
 ```js
-const EasyFilter = require('EasyFilter')
+const EasyFilter = require('@noriller/easy-filter')
 ```
-
-### **As of 2021-09-04 the package is still not available, please wait patiently**
 
 ### Finally, to actually use it
 

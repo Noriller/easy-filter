@@ -1,7 +1,7 @@
 {
-  "name": "easy-filter",
+  "name": "@noriller/easy-filter",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "EasyFilter is a lightweight, zero dependencies, minimal setup, intuitive and powerful filter for all your filter needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,11 +38,7 @@
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.3"
   },
-  "author": {
-    "name": "Bruno Noriller",
-    "email": "brunonoriller@gmail.com",
-    "url": "https://github.com/Noriller"
-  },
+  "author": "Bruno Noriller <brunonoriller@gmail.com> (https://github.com/Noriller)",
   "bugs": {
     "url": "https://github.com/Noriller/easy-filter/issues"
   },
@@ -86,5 +82,12 @@
   },
   "lint-staged": {
     "*.{js,ts}": "yarn lint"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noriller/easy-filter.git"
+  },
+  "files": [
+    "dist/"
+  ]
 }
