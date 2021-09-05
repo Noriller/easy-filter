@@ -100,7 +100,7 @@ export interface SetupOptions {
    * The date format used in the source.
    * @remarks
    * This option can't be later overriden or passed.
-   * @type DateFormat - "YYYY-MM-DD" | "DD-MM-YYYY" | "MM-DD-YYYY" | "YYYY-DD-MM"
+   * @type DateFormat - "YYYY-MM-DD" | "DD-MM-YYYY" | "MM-DD-YYYY"
    */
   dateFormat?: DateFormat;
   /**
