@@ -12,6 +12,9 @@ It's as easy as this:
 
 ## Get Started
 
+### **This is a beta release. The API won't change, but I'll be fixing the build to purge all unnecessary annotations**
+### *Feel free to start using!*
+
 ### Use your choice of package manager
 
 `npm install @noriller/easy-filter`
