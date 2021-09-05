@@ -134,7 +134,7 @@ filter.search('word1 word2 tag:value "quoted value"')
 
 Anything inside quotes (either double `"` or single `'`) will be treated as one entity.
 
-EasyFilter relies heavily on recursion and this one entity will be then split into multiple entities, following those entities rules.
+EasyFilter relies heavily on recursion and this one entity will be split into multiple entities, following those entities rules.
 
 To be a match, the data must get a match from each subquery inside quotes.
 
@@ -244,6 +244,27 @@ Passing only one argument sets only the lower bound. To set only the upper bound
 More on accepted `Date Formats` in [EasyFilter Options](#easyfilter-options), but you can use the common formats like `DD/MM/YYYY` and `MM/DD/YYYY` as long as you pass it as an `OPTION`. If no `Date Format` is provided, the Javascript default implementation of `new Date('your date string')` will be used.
 
 ### NOT query
+
+By nesting any and multiple queries inside the syntax `NOT()` you can invert those and it will NOT return anything that matches.
+
+If there's a match in the `NOT` query, it won't return even if there's a match in other queries.
+
+If your query contains only `NOT` queries, it will return everything that don't have a match.
+
+When combining with other queries, `NOT` queries will filter out matches from those.
+
+#### NOT Remarks
+
+A `NOT` query can contain: `OR`, `AND` and `TAG` queries.
+
+All `NOT` are parsed at the same level, nesting it inside other queries will just remove them from the query.
+
+#### NOT Example:
+```js
+filter.search('not("quoted value tag:value")')
+```
+Any element with `quoted`, `value` and `tag:value` will not be returned.
+
 ### EasyFilter Options
 
 ## What's next?
