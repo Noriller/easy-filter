@@ -137,11 +137,7 @@ export interface FilterOptions extends SetupOptions {
   dateFormatSearch?: DateFormat;
 }
 
-export type DateFormat =
-  | 'YYYY-MM-DD'
-  | 'DD-MM-YYYY'
-  | 'MM-DD-YYYY'
-  | 'YYYY-DD-MM';
+export type DateFormat = 'YYYY-MM-DD' | 'DD-MM-YYYY' | 'MM-DD-YYYY';
 
 export type NOT_Exclusion = 'NOT_Exclusion';
 
