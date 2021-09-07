@@ -1,7 +1,7 @@
 {
   "name": "@noriller/easy-filter",
   "private": false,
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "EasyFilter is a lightweight, zero dependencies, minimal setup, intuitive and powerful filter for all your filter needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,8 @@
     "prepare": "husky install && npx rimraf dist",
     "clean": "npx rimraf dist",
     "build": "tsc",
-    "prepublishOnly": "tsc"
+    "build:prod": "npx rimraf dist && tsc && tsc -p ./tsconfig.nocomments.json",
+    "prepublishOnly": "tsc && tsc -p ./tsconfig.nocomments.json"
   },
   "dependencies": {},
   "devDependencies": {

@@ -3,7 +3,7 @@
     "module": "commonjs",
     "declaration": true,
     "removeComments": false,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
@@ -13,7 +13,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": false,
+    "noEmit": false,
+    "noEmitHelpers": false
   },
   "exclude": [
     "src/**/*.spec.ts",
