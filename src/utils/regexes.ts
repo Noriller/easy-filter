@@ -4,7 +4,7 @@
  *
  * @example
  * ```js
- * '(will return all this (and even this))'
+ * '(will return all this (and even this) but not this)'
  * ```
  */
 export const middleBetweenBracketsRegex = /(?<=\().*?(?=\))/;

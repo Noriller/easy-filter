@@ -2,21 +2,21 @@ import { ParsedPart, ParsedResult } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 
 export function quotesParse(search: string): ParsedResult {
+  // Matches anything between first quote and next matching quote.
   const quotePartRegex = /(?<quotevalue>(?<quote>["']).*?\k<quote>)/gi;
-  const tagPartRegexAloneBracketQuotes =
-    /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\(.*?\)|.*?(?=(\s|$))))/gi;
   /**
    * While a quote can have a tag and a tag can have quotes,
-   * I need to be able to get quotes first that aren't part of tags.
+   * I needed to be able to get quotes first that aren't part of tags.
    * I couldn't find a regex to do that,
    *  so I'm going to use both and exclude quotes that are part of tags.
    */
+  const tagPartRegexAloneBracketQuotes =
+    /(?<tags>\S+:(?<tagvalue>(?<quotetag>["']).*?\k<quotetag>|\(.*?\)|.*?(?=(\s|$))))/gi;
 
   const quotesPartFound = search.match(quotePartRegex) || false;
-  const tagsPartFound =
-    quotesPartFound && search.match(tagPartRegexAloneBracketQuotes);
 
   if (quotesPartFound) {
+    const tagsPartFound = search.match(tagPartRegexAloneBracketQuotes);
     const quotesToUse = tagsPartFound
       ? quotesPartFound.filter((quote) =>
           tagsPartFound.reduce(
@@ -53,7 +53,9 @@ const quotesReducer = (
   reducedString: string;
   reducedQuotes: ParsedPart[];
 } => {
-  const quoteParsed = quotePart.slice(1, quotePart.length - 1);
+  const openingQuoteIndex = 1;
+  const closingQuoteIndex = quotePart.length - 1;
+  const quoteParsed = quotePart.slice(openingQuoteIndex, closingQuoteIndex);
   return {
     reducedString: cleanString(reducedString, quotePart),
     reducedQuotes: [

@@ -4,6 +4,7 @@ import { cleanString } from '../../utils/cleanString';
 import { middleBetweenBracketsRegex } from '../../utils/regexes';
 
 export function rangeParse(search: string): ParsedResult {
+  // Matches all: range(*anything*)
   const rangePartRegex = /\b(range)\(.*?\)/gi;
 
   const rangePartFound = search.match(rangePartRegex) || false;
@@ -14,7 +15,9 @@ export function rangeParse(search: string): ParsedResult {
       const minumum = (min === '' || min === undefined || isNaN(Number(min))) ? Number.NEGATIVE_INFINITY : Number(min);
       const maximum = (max === '' || max === undefined || isNaN(Number(max))) ? Number.POSITIVE_INFINITY : Number(max);
       return [minumum, maximum];
-    }).filter(([min, max]) => !(min === -Infinity && max === Infinity));
+    })
+      /* If no value is passed to range (or they are invalid values), the default min/max would be used, we filter it here.*/
+      .filter(([min, max]) => !(min === -Infinity && max === Infinity));
 
     const cleanedString: string = rangePartFound.reduce((cleaned, range) => cleanString(cleaned, range), search);
 
