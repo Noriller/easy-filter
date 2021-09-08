@@ -39,6 +39,14 @@ That's it! 🧙‍♂️
 
 Check out the section [EasyFilter Operators](#easyfilter-operators) to see all that you can pass to the filter, the real ✨magic✨ is there!
 
+```js
+✨ Magic like turning this:
+  `search for something "this between quotes" and then here:"you search for this"`
+✨
+  Into something that works for single values, quoted values and even values nested inside keys. AND MORE!
+✨
+```
+
 #### Really? That's it?
 
 Ok. If you need more options, here's the full setup you can do using all options available:
@@ -391,7 +399,11 @@ const filter = EasyFilter(sourceArray, {
 
 Here's something you can expect in the future:
 
-* Streams support ⚡: be it from an API or from a data source, data usually comes as a stream. If the Javascript Engine can handle streaming fine, why wait for it to buffer everything?
+* New objective: `EasyFilter` will now become a trilogy! They will all share the same parser, so you will be able to filter values already buffered and values in your databases all the same, simple way.
+  * This, which filter values in objects.
+  * `EasyFilter-SQL` - That will create SQL queries.
+  * `EasyFilter-Mongo` - That will create Mongo queries.
+* (TBD) Streams support ⚡: be it from an API or from a data source, data usually comes as a stream. If the Javascript Engine can handle streaming fine, why wait for it to buffer everything?
 
 ## There's a problem or it could be better
 
