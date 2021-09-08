@@ -9,6 +9,7 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --fix .",
     "test": "jest --watch --verbose",
+    "test:ci": "jest --verbose",
     "test:cov": "jest --coverage --silent --watchAll",
     "prepare": "husky install && npx rimraf dist",
     "clean": "npx rimraf dist",
