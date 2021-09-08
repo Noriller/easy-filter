@@ -13,8 +13,8 @@
     "prepare": "husky install && npx rimraf dist",
     "clean": "npx rimraf dist",
     "build": "tsc",
-    "build:prod": "npx rimraf dist && tsc && tsc -p ./tsconfig.nocomments.json",
-    "prepublishOnly": "tsc && tsc -p ./tsconfig.nocomments.json"
+    "build:prod": "npx rimraf dist && tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
+    "prepublishOnly": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json"
   },
   "dependencies": {},
   "devDependencies": {
