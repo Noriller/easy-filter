@@ -11,7 +11,7 @@ export function tagNullMode({
   searchNode: ParsedTag;
   indexing: boolean;
 }): number | boolean {
-  const objectFromTag = tagCrawler(object, searchNode.tag);
+  const objectFromTag = tagCrawler(object, searchNode.tag, searchNode.aliases);
   if (objectFromTag.length === 0) {
     return indexing ? TAG_NULL_VALUE : true;
   } else {
