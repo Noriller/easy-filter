@@ -2,6 +2,8 @@ import { ParsedPart, ParsedResult } from '../../shared/shapes';
 import { cleanString } from '../../utils/cleanString';
 
 export function notParse(search: string): ParsedResult {
+  // Matches anything inside not(*anything*)
+  // This can take two nested brackets, but if more is needed, basically you need to expand the regex "by hand".
   const notPartRegexWithNestedBalancedBrackets =
     /not\((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*\)/gi;
 
@@ -36,7 +38,9 @@ const notsReducer = (
   reducedString: string;
   reducedNots: ParsedPart[];
 } => {
-  const notParsed = notPart.slice(4, notPart.length - 1);
+  const notBracketIndex = 4;
+  const closingBracketIndex = notPart.length - 1;
+  const notParsed = notPart.slice(notBracketIndex, closingBracketIndex);
   if (notParsed === '') {
     return {
       reducedString: cleanString(reducedString, notPart),

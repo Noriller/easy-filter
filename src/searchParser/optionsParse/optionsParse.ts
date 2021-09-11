@@ -7,6 +7,7 @@ import {
 } from '../../utils/regexes';
 
 export function optionsParse(search: string): ParsedOptions {
+  // Matches option(*anything*)/options(*anything*)
   const optionsPartRegex = /\b(options|option)\(.+?\)/gi;
 
   const optionsPartFound = search.match(optionsPartRegex) || null;

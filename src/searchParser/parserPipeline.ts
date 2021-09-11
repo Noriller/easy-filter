@@ -12,12 +12,9 @@ import { rangeParse } from './rangeParse/rangeParse';
 import { tagParse } from './tagParse/tagParse';
 
 /**
- * ! hierarchy:
- * * not()
- * * quotes -> "" / ''
- * * tags -> tag:value / tag:"quoted" / tag:(multiple values)
- * * range/dateRange -> range(x,y) -> only inside tags -> no OR
- * * values (or)
+ * This is the actual core of the parser.
+ *
+ * With everything set, this will, with each step, take from the string and return a "smaller" string.
  */
 export function parserPipeline({
   search,
@@ -30,6 +27,8 @@ export function parserPipeline({
   filterOptions?: FilterOptions;
   insideTag?: boolean;
 }): ParsedPart[] {
+  // This is the recursion exit condition.
+  // New types that should not have children, should be added here.
   if (
     type === 'OR' ||
     type === 'RANGE' ||
@@ -40,6 +39,13 @@ export function parserPipeline({
 
   const parsedArray: ParsedPart[] = [];
   let searchString: string = search;
+
+  // As of now, the hierarchy (what is parsed first) is:
+  // * not() -> but only in the first pass.
+  // * quotes -> "" / ''
+  // * tags -> tag:value / tag:"quoted" / tag:(multiple values)
+  // * range/dateRange -> range(x,y) -> only inside tags -> no children
+  // * values (or) -> no children
 
   searchString = parserWrapper({
     searchString,
@@ -93,6 +99,13 @@ export function parserPipeline({
   });
 }
 
+/**
+ * Helper function to make it easier to read the pipeline.
+ *
+ * Skips when without string or on condition.
+ *
+ * Uses the provided parser, push the parsedResults to the tree and return the string after parsing.
+ */
 function parserWrapper({
   searchString,
   parser,

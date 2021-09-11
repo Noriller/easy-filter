@@ -16,9 +16,5 @@
     "incremental": false,
     "noEmit": false,
     "noEmitHelpers": false
-  },
-  "exclude": [
-    "src/**/*.spec.ts",
-    "./dist/**/*"
-  ]
+  }
 }

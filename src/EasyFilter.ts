@@ -77,11 +77,14 @@ function search(
     });
   }
 
-  const maxReturns = options?.limit || source.length;
+  let maxReturns =
+    options?.limit > 0 && options?.limit <= source.length
+      ? options?.limit
+      : source.length;
 
   const returnAccumulator = [];
 
-  for (let i = 0; i < maxReturns; i++) {
+  for (let i = 0; i < source.length; i++) {
     const object = options?.normalize
       ? JSON.parse(removeDiacritics(JSON.stringify(source[i])))
       : source[i];
@@ -93,11 +96,14 @@ function search(
     });
 
     if (result) {
+      maxReturns--;
       const objectToReturn = options?.indexing
         ? addIndexing(source[i], <number>result)
         : source[i];
       returnAccumulator.push(objectToReturn);
     }
+
+    if (!maxReturns) i = source.length;
   }
 
   return returnAccumulator;

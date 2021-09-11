@@ -1,5 +1,12 @@
 import { ParsedPart, TagAliases, ParsedTag } from '../shared/shapes';
 
+/**
+ * addAliases is used to add aliases to the searchTree.
+ *
+ * This is used so only the needed aliases are passed to the filter.
+ *
+ * @returns returns the tree with any TAG node with the matching aliases added.
+ */
 export function addAliases(
   node: ParsedPart,
   tagAliases: TagAliases,
@@ -14,6 +21,9 @@ export function addAliases(
   return node;
 }
 
+/**
+ * For each tag, returns the related aliases a key/value object.
+ */
 function getAliases({
   tag,
   tagAliases,

@@ -11,6 +11,7 @@ import { parseDate } from '../../utils/parseDate';
 export const dateRangeParse =
   (dateOptions: DateFormat = null) =>
   (search: string): ParsedResult => {
+    // Matches all: dateRange(*anything*)
     const dateRangePartRegex = /\b(dateRange)\(.*?\)/gi;
 
     const dateRangePartFound = search.match(dateRangePartRegex) || false;
@@ -33,6 +34,7 @@ export const dateRangeParse =
             new Date(+maxDate || maximumDate),
           ];
         })
+        /* If no value is passed to dateRange (or they are invalid dates), the default min/max would be used, we filter it here.*/
         .filter(
           ([min, max]) =>
             !(
