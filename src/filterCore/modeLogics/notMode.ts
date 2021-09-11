@@ -27,6 +27,7 @@ export function notMode({
       )
       .filter(Boolean).length > 0;
 
+  // It doesn't matter the result, only if there was any.
   if (childsResult) {
     return 'NOT_Exclusion';
   } else {

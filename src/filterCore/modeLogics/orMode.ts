@@ -9,6 +9,7 @@ export function orMode({
   searchNode: ParsedPart;
   indexing: boolean;
 }): number | boolean {
+  // In case a fuzzy search were to be included, this would probably be where.
   const bool = stringifiedObject.includes(searchNode.payload);
   return indexing ? Number(bool) : bool;
 }
