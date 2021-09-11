@@ -32,7 +32,7 @@ describe('EasyFilter', () => {
 
   describe('using options', () => {
     it('should search using limit', () => {
-      const result = ef.search('id:range(1,3) options(limit:2)');
+      const result = ef.search('invalidTag:null options(limit:2)');
       expect(result).toHaveLength(2);
     });
 
