@@ -13,10 +13,10 @@
     "test:cov": "jest --coverage --silent --watchAll",
     "prepare": "husky install && yarn cleanDist",
     "cleanDist": "npx rimraf dist/*",
-    "cleanUnexposedSources": "npx rimraf dist/filterCore/**/**/**/*.js.map dist/searchParser/**/**/**/*.js.map dist/utils/**/**/**/*.js.map dist/filterCore/**/**/**/*.d.ts dist/searchParser/**/**/**/*.d.ts dist/utils/**/**/**/*.d.ts",
     "build": "tsc",
-    "build:prod": "yarn cleanDist && tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
-    "prepublishOnly": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json && yarn cleanUnexposedSources"
+    "prebuild:prod": "yarn cleanDist",
+    "build:prod": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
+    "prepublishOnly": "yarn build:prod"
   },
   "dependencies": {},
   "devDependencies": {
