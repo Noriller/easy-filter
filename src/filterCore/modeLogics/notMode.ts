@@ -1,4 +1,8 @@
-import { DateFormat, NOT_Exclusion, ParsedPart } from '../../shared/shapes';
+import {
+  NOT_Exclusion,
+  ParsedPart,
+} from '@noriller/easy-filter-parser/types/shapes';
+import { DateFormat } from '@noriller/easy-filter-parser';
 import { shouldReturnRecursion } from '../shouldReturn';
 
 export function notMode({

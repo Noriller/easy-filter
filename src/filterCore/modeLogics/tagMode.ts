@@ -1,4 +1,5 @@
-import { DateFormat, ParsedTag } from '../../shared/shapes';
+import { ParsedTag } from '@noriller/easy-filter-parser/types/shapes';
+import { DateFormat } from '@noriller/easy-filter-parser';
 import { getTextCrawler } from '../objectCrawlers/getTextCrawler';
 import { tagCrawler } from '../objectCrawlers/tagCrawler';
 import { shouldReturnRecursion } from '../shouldReturn';

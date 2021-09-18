@@ -11,14 +11,16 @@
     "test": "jest --watch --verbose",
     "test:ci": "jest --verbose",
     "test:cov": "jest --coverage --silent --watchAll",
-    "prepare": "husky install && yarn cleanDist",
+    "prepare": "husky install",
     "cleanDist": "npx rimraf dist/*",
     "build": "tsc",
     "prebuild:prod": "yarn cleanDist",
-    "build:prod": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
+    "build:prod": "tsc && tsc -p ./tsconfig.nocomments.json",
     "prepublishOnly": "yarn build:prod"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@noriller/easy-filter-parser": "^0.0.4"
+  },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",

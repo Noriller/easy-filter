@@ -1,5 +1,5 @@
-import { DateFormat } from '../shared/shapes';
-import { searchParser } from '../searchParser/searchParser';
+import { DateFormat } from '@noriller/easy-filter-parser';
+import { searchParser } from '@noriller/easy-filter-parser/searchParser/searchParser';
 import { shouldReturn } from './shouldReturn';
 
 describe('shouldReturn', () => {

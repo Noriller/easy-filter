@@ -1,13 +1,8 @@
 import { shouldReturn } from './filterCore/shouldReturn';
-import { searchParser } from './searchParser/searchParser';
-import { addAliases } from './searchParser/tagAliases';
-import {
-  ParsedPart,
-  SetupOptions,
-  TagAliases,
+import EasyFilterParser, {
   OptionalParameters,
-} from './shared/shapes';
-import { removeDiacritics } from './utils/removeDiacritics';
+} from '@noriller/easy-filter-parser';
+import { removeDiacritics } from '@noriller/easy-filter-parser/utils';
 
 /**
  * EasyFilter is a minimal setup filter.
@@ -46,6 +41,11 @@ export default function EasyFilter(
   source: Array<unknown>,
   { filterOptions = {}, tagAliases = {} }: OptionalParameters = {},
 ) {
+  const parser = EasyFilterParser({
+    filterOptions,
+    tagAliases,
+  });
+
   return {
     /**
      * Call `search` with your query string to filter the source array.
@@ -57,25 +57,12 @@ export default function EasyFilter(
      *
      * @see README for everything that can be passed in the query string.
      */
-    search: (string) => search(string, source, filterOptions, tagAliases),
+    search: (string) => search(string, source, parser),
   };
 }
 
-function search(
-  string: string,
-  source: Array<unknown>,
-  filterOptions: SetupOptions,
-  tagAliases: TagAliases,
-) {
-  const { options, searchTree } = searchParser(string, filterOptions);
-
-  let finalTree: ParsedPart[] = searchTree;
-
-  if (tagAliases !== {}) {
-    finalTree = searchTree.map((node) => {
-      return addAliases(node, tagAliases);
-    });
-  }
+function search(string: string, source: Array<unknown>, parser) {
+  const { options, searchTree } = parser.search(string);
 
   let maxReturns =
     options?.limit > 0 && options?.limit <= source.length
@@ -91,7 +78,7 @@ function search(
 
     const result = shouldReturn({
       object,
-      searchTree: finalTree,
+      searchTree,
       filterOptions: options,
     });
 

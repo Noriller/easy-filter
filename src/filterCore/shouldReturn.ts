@@ -1,18 +1,17 @@
+import { DateFormat, FilterOptions } from '@noriller/easy-filter-parser';
 import {
-  DateFormat,
-  FilterOptions,
   NOT_Exclusion,
   ParsedPart,
   ParsedRange,
   ParsedTag,
-} from '../shared/shapes';
+} from '@noriller/easy-filter-parser/types/shapes';
 import { getTextCrawler } from './objectCrawlers/getTextCrawler';
 import { quoteMode } from './modeLogics/quoteMode';
 import { orMode } from './modeLogics/orMode';
 import { tagMode } from './modeLogics/tagMode';
 import { rangeMode } from './modeLogics/rangeMode';
 import { dateRangeMode } from './modeLogics/dateRangeMode';
-import { parseDate } from '../utils/parseDate';
+import { parseDate } from '@noriller/easy-filter-parser/utils';
 import { notMode } from './modeLogics/notMode';
 import { tagNullMode } from './modeLogics/tagNullMode';
 import { reduceIndexing } from './indexing/reduceIndexing';

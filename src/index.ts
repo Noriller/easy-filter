@@ -1,11 +1,12 @@
 import EasyFilter from './EasyFilter';
+
 import {
   DateFormat,
   OptionalParameters,
   SetupOptions,
   FilterOptions,
   TagAliases,
-} from './shared/shapes';
+} from '@noriller/easy-filter-parser';
 
 export default EasyFilter;
 export {
