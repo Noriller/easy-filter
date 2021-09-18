@@ -15,7 +15,7 @@
     "cleanDist": "npx rimraf dist/*",
     "build": "tsc",
     "prebuild:prod": "yarn cleanDist",
-    "build:prod": "tsc && tsc -p ./tsconfig.nocomments.json",
+    "build:prod": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
     "prepublishOnly": "yarn build:prod"
   },
   "dependencies": {
