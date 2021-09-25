@@ -1,7 +1,7 @@
 {
   "name": "@noriller/easy-filter",
   "private": false,
-  "version": "1.0.1",
+  "version": "2.0.1",
   "description": "EasyFilter is a lightweight, zero dependencies, minimal setup, intuitive and powerful filter for all your filter needs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,14 +11,19 @@
     "test": "jest --watch --verbose",
     "test:ci": "jest --verbose",
     "test:cov": "jest --coverage --silent --watchAll",
-    "prepare": "husky install && yarn cleanDist",
+    "prepare": "husky install",
     "cleanDist": "npx rimraf dist/*",
-    "cleanUnexposedSources": "npx rimraf dist/filterCore/**/**/**/*.js.map dist/searchParser/**/**/**/*.js.map dist/utils/**/**/**/*.js.map dist/filterCore/**/**/**/*.d.ts dist/searchParser/**/**/**/*.d.ts dist/utils/**/**/**/*.d.ts",
     "build": "tsc",
-    "build:prod": "yarn cleanDist && tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
-    "prepublishOnly": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json && yarn cleanUnexposedSources"
+    "prebuild:prod": "yarn cleanDist",
+    "build:prod": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
+    "prepackPublish": "yarn build:prod",
+    "packPublish": "node buildPack.js",
+    "packPublish:dryRun": "yarn packPublish && npm publish ./out/*.tgz --dry-run",
+    "packPublish:publish": "yarn packPublish && yarn publish ./out/*.tgz"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@noriller/easy-filter-parser": "^1.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
@@ -27,6 +32,7 @@
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",

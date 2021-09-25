@@ -1,4 +1,4 @@
-import { TagAliases } from '../../shared/shapes';
+import { TagAliases } from '@noriller/easy-filter-parser';
 
 function tagCrawlerWrapper(
   object: unknown,
