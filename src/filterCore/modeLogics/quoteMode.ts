@@ -1,4 +1,4 @@
-import { ParsedPart } from '@noriller/easy-filter-parser/types/shapes';
+import { ParsedPart } from '@noriller/easy-filter-parser/types';
 import { shouldReturnRecursion } from '../shouldReturn';
 import { reduceIndexing } from '../indexing/reduceIndexing';
 import { QUOTE_MULTIPLIER } from '../indexing/indexingConstants';

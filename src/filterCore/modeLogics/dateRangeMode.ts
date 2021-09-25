@@ -1,4 +1,4 @@
-import { ParsedRange } from '@noriller/easy-filter-parser/types/shapes';
+import { ParsedRange } from '@noriller/easy-filter-parser/types';
 import { RANGE_VALUE } from '../indexing/indexingConstants';
 
 export function dateRangeMode({

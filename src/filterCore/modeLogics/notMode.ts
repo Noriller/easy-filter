@@ -1,9 +1,8 @@
-import {
-  NOT_Exclusion,
-  ParsedPart,
-} from '@noriller/easy-filter-parser/types/shapes';
+import { ParsedPart } from '@noriller/easy-filter-parser/types';
 import { DateFormat } from '@noriller/easy-filter-parser';
 import { shouldReturnRecursion } from '../shouldReturn';
+
+export type NOT_Exclusion = 'NOT_Exclusion';
 
 export function notMode({
   object,

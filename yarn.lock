@@ -692,10 +692,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@noriller/easy-filter-parser@^0.0.4":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@noriller/easy-filter-parser/-/easy-filter-parser-0.0.4.tgz#31b908070e6de17c9a887de87494008804e92aa9"
-  integrity sha512-gQ78gKP7VZEJJdVVRfaQR3n0nWumWBwBd3b8fL4XZoMPs/bIc381L+V1wI5jjBzReK5BWOVu4uyFPrjsDeYWMw==
+"@noriller/easy-filter-parser@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@noriller/easy-filter-parser/-/easy-filter-parser-1.0.0.tgz#5a736ba775c7d63a6f7fa82fd22c5d786686f0f0"
+  integrity sha512-W2vFwPDSuJwb0hn0oeInCVgBU3sYECqUzqAdDJ8imMY28Vw4JjVO2YcVZU775libo35f3pZJk9ryMY6AJPTIOg==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"

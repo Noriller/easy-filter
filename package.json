@@ -19,7 +19,7 @@
     "prepublishOnly": "yarn build:prod"
   },
   "dependencies": {
-    "@noriller/easy-filter-parser": "^0.0.4"
+    "@noriller/easy-filter-parser": "^1.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

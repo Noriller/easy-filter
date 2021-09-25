@@ -1,4 +1,4 @@
-import { ParsedPart } from '@noriller/easy-filter-parser/types/shapes';
+import { ParsedPart } from '@noriller/easy-filter-parser/types';
 
 export function orMode({
   stringifiedObject,

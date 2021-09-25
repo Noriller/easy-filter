@@ -1,4 +1,4 @@
-import { ParsedTag } from '@noriller/easy-filter-parser/types/shapes';
+import { ParsedTag } from '@noriller/easy-filter-parser/types';
 import { DateFormat } from '@noriller/easy-filter-parser';
 import { getTextCrawler } from '../objectCrawlers/getTextCrawler';
 import { tagCrawler } from '../objectCrawlers/tagCrawler';

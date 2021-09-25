@@ -1,4 +1,4 @@
-import { ParsedTag } from '@noriller/easy-filter-parser/types/shapes';
+import { ParsedTag } from '@noriller/easy-filter-parser/types';
 import { TAG_NULL_VALUE } from '../indexing/indexingConstants';
 import { tagCrawler } from '../objectCrawlers/tagCrawler';
 
