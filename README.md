@@ -2,7 +2,7 @@
 
 🎈 Welcome to **EasyFilter**! 👋
 
-EasyFilter is a lightweight ☁️, zero dependencies 🚢, minimal setup 😮, intuitive 😃 and powerful 💪 filter for all your filter needs.
+EasyFilter is a lightweight ☁️, just one dependency 🚢, minimal setup 😮, intuitive 😃 and powerful 💪 filter for all your filter needs.
 
 It's as easy as this:
 ```js
@@ -10,13 +10,18 @@ It's as easy as this:
   const filteredResult = filter.search('your query')
 ```
 
+The one dependency is [EasyFilterParser](https://www.npmjs.com/package/@noriller/easy-filter-parser) that was part of this package before. 😉
 ## Get Started
 
 ### Use your choice of package manager
 
-`npm install @noriller/easy-filter`
+```bash
+npm install @noriller/easy-filter
+```
 
-`yarn add @noriller/easy-filter`
+```bash
+yarn add @noriller/easy-filter
+```
 
 ### Then import it with the syntax of your choice
 
