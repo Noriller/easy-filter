@@ -16,7 +16,10 @@
     "build": "tsc",
     "prebuild:prod": "yarn cleanDist",
     "build:prod": "tsc -p ./tsconfig.build.json && tsc -p ./tsconfig.nocomments.json",
-    "prepublishOnly": "yarn build:prod"
+    "prepackPublish": "yarn build:prod",
+    "packPublish": "node buildPack.js",
+    "packPublish:dryRun": "yarn packPublish && npm publish ./out/*.tgz --dry-run",
+    "packPublish:publish": "yarn packPublish && yarn publish ./out/*.tgz"
   },
   "dependencies": {
     "@noriller/easy-filter-parser": "^1.0.0"
@@ -29,6 +32,7 @@
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
