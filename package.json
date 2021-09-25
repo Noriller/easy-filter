@@ -95,8 +95,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Noriller/easy-filter.git"
-  },
-  "files": [
-    "dist/"
-  ]
+  }
 }
