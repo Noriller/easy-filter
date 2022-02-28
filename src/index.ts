@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import EasyFilter from './EasyFilter';
 
 import {

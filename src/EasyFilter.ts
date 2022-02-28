@@ -65,14 +65,14 @@ function search(string: string, source: Array<unknown>, parser) {
   const { options, searchTree } = parser.search(string);
 
   let maxReturns =
-    options?.limit > 0 && options?.limit <= source.length
-      ? options?.limit
+    options.limit > 0 && options.limit <= source.length
+      ? options.limit
       : source.length;
 
   const returnAccumulator = [];
 
   for (let i = 0; i < source.length; i++) {
-    const object = options?.normalize
+    const object = options.normalize
       ? JSON.parse(removeDiacritics(JSON.stringify(source[i])))
       : source[i];
 
@@ -84,7 +84,7 @@ function search(string: string, source: Array<unknown>, parser) {
 
     if (result) {
       maxReturns--;
-      const objectToReturn = options?.indexing
+      const objectToReturn = options.indexing
         ? addIndexing(source[i], <number>result)
         : source[i];
       returnAccumulator.push(objectToReturn);
