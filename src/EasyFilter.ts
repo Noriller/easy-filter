@@ -71,10 +71,10 @@ function search(string: string, source: Array<unknown>, parser) {
 
   const returnAccumulator = [];
 
-  for (let i = 0; i < source.length; i++) {
+  for (const currentItem of source) {
     const object = options.normalize
-      ? JSON.parse(removeDiacritics(JSON.stringify(source[i])))
-      : source[i];
+      ? JSON.parse(removeDiacritics(JSON.stringify(currentItem)))
+      : currentItem;
 
     const result = shouldReturn({
       object,
@@ -85,12 +85,12 @@ function search(string: string, source: Array<unknown>, parser) {
     if (result) {
       maxReturns--;
       const objectToReturn = options.indexing
-        ? addIndexing(source[i], <number>result)
-        : source[i];
+        ? addIndexing(currentItem, <number>result)
+        : currentItem;
       returnAccumulator.push(objectToReturn);
     }
 
-    if (!maxReturns) i = source.length;
+    if (!maxReturns) break;
   }
 
   return returnAccumulator;

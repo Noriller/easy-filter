@@ -11,7 +11,7 @@ import { tagMode } from './modeLogics/tagMode';
 import { rangeMode } from './modeLogics/rangeMode';
 import { dateRangeMode } from './modeLogics/dateRangeMode';
 import { parseDate } from '@noriller/easy-filter-parser/utils';
-import { notMode, NOT_Exclusion } from './modeLogics/notMode';
+import { notMode, NOT_Exclusion, NOT_Pass } from './modeLogics/notMode';
 import { tagNullMode } from './modeLogics/tagNullMode';
 import { reduceIndexing } from './indexing/reduceIndexing';
 
@@ -36,14 +36,18 @@ function shouldReturnWrapper({
         searchNode: search,
         dateFormat,
         indexing,
-      }),
-    )
-    .flat(Infinity)
-    .filter(Boolean);
+      })
+    );
 
   if (results.includes('NOT_Exclusion')) return false;
+  if (results.length === 1 && results[0] === 'NOT_Pass') return indexing ? 1 : true;
 
-  return indexing ? reduceIndexing(<number[]>results) : results.length > 0;
+  const returnResults = results.filter(val => {
+    if (val === 'NOT_Pass') return false;
+    return Boolean(val);
+  });
+
+  return indexing ? reduceIndexing(<number[]>returnResults) : returnResults.length > 0;
 }
 
 export function shouldReturnRecursion({
@@ -58,7 +62,7 @@ export function shouldReturnRecursion({
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
   indexing?: boolean;
-}): number | boolean | NOT_Exclusion {
+  }): number | boolean | NOT_Exclusion | NOT_Pass {
   if (searchNode.mode === 'OR')
     return orMode({ stringifiedObject, searchNode, indexing });
 

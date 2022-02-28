@@ -80,3 +80,43 @@ describe('EasyFilter', () => {
     });
   });
 });
+
+describe('EasyFilterIssues', () => {
+  describe('using NOT operator alone returns an empty array | issue: #8', () => {
+    const ef = EasyFilter(poke10);
+    it('should search using NOT operator', () => {
+      const result = ef.search('not(id:2)');
+      expect(result).not.toHaveLength(0);
+      expect(result).toHaveLength(9);
+    });
+
+    it('should search using NOT operator and other operator', () => {
+      const result = ef.search('not(id:2) id:3');
+      expect(result).toHaveLength(1);
+    });
+
+    it('should search using NOT operator with index', () => {
+      const ef_index = EasyFilter(poke10, {
+        filterOptions: {
+          indexing: true,
+        }
+      });
+
+      const result = ef_index.search('not(id:2)');
+      expect(result).not.toHaveLength(0);
+      expect(result).toHaveLength(9);
+    });
+
+    it('should search using NOT operator and other operator with index', () => {
+      const ef_index = EasyFilter(poke10, {
+        filterOptions: {
+          indexing: true,
+        }
+      });
+
+      const result = ef_index.search('not(id:2) id:3');
+      expect(result).toHaveLength(1);
+    });
+  });
+});
+

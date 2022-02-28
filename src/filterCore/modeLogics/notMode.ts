@@ -3,6 +3,10 @@ import { DateFormat } from '@noriller/easy-filter-parser';
 import { shouldReturnRecursion } from '../shouldReturn';
 
 export type NOT_Exclusion = 'NOT_Exclusion';
+/**
+ * This tells that it passed from a not mode.
+ */
+export type NOT_Pass = 'NOT_Pass';
 
 export function notMode({
   object,
@@ -16,7 +20,7 @@ export function notMode({
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
   indexing: boolean;
-}): number | boolean | NOT_Exclusion {
+  }): number | boolean | NOT_Exclusion | NOT_Pass {
   const childsResult =
     searchNode.childs
       .map((c) =>
@@ -34,6 +38,6 @@ export function notMode({
   if (childsResult) {
     return 'NOT_Exclusion';
   } else {
-    return indexing ? 0 : false;
+    return 'NOT_Pass';
   }
 }
