@@ -10,7 +10,7 @@ export function orMode({
   indexing: boolean;
 }): number | boolean {
   // In case a fuzzy search were to be included, this would probably be where.
-  const regex = new RegExp(searchNode.payload, "i");
+  const regex = new RegExp(searchNode.payload, 'i');
   const bool = regex.test(stringifiedObject);
 
   return indexing ? Number(bool) : bool;
