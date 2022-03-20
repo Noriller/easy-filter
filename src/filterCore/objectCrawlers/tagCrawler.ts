@@ -44,10 +44,24 @@ function tagCrawlerRecursion(
       .filter((x) => x !== undefined && x !== null);
   }
 
+  const tagCaseInsensitive = Reflect.ownKeys(
+    object as Record<string, unknown>,
+  ).filter((key) => {
+    if (
+      typeof key !== 'symbol' &&
+      key.toLowerCase() === firstTag.toLowerCase()
+    ) {
+      return true;
+    }
+    return false;
+  });
+  const tagToUse =
+    tagCaseInsensitive.length > 0 ? <string>tagCaseInsensitive[0] : firstTag;
+
   // Same comment as tagCrawlerWrapper return annotation.
   return [
-    tagCrawlerRecursion(object[firstTag], aliases, restTags),
-    aliasesTags(aliases, firstTag).map((aliasesTag) =>
+    tagCrawlerRecursion(object[tagToUse], aliases, restTags),
+    aliasesTags(aliases, tagToUse).map((aliasesTag) =>
       tagCrawlerWrapper(object, aliasesTag, aliases),
     ),
   ];

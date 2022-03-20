@@ -20,7 +20,7 @@ export function notMode({
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
   indexing: boolean;
-  }): number | boolean | NOT_Exclusion | NOT_Pass {
+}): number | boolean | NOT_Exclusion | NOT_Pass {
   const childsResult =
     searchNode.childs
       .map((c) =>

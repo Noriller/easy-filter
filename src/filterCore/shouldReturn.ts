@@ -28,26 +28,28 @@ function shouldReturnWrapper({
 
   const stringifiedObject = getTextCrawler(object);
 
-  const results = searchTree
-    .map((search) =>
-      shouldReturnRecursion({
-        object,
-        stringifiedObject,
-        searchNode: search,
-        dateFormat,
-        indexing,
-      })
-    );
+  const results = searchTree.map((search) =>
+    shouldReturnRecursion({
+      object,
+      stringifiedObject,
+      searchNode: search,
+      dateFormat,
+      indexing,
+    }),
+  );
 
   if (results.includes('NOT_Exclusion')) return false;
-  if (results.length === 1 && results[0] === 'NOT_Pass') return indexing ? 1 : true;
+  if (results.length === 1 && results[0] === 'NOT_Pass')
+    return indexing ? 1 : true;
 
-  const returnResults = results.filter(val => {
+  const returnResults = results.filter((val) => {
     if (val === 'NOT_Pass') return false;
     return Boolean(val);
   });
 
-  return indexing ? reduceIndexing(<number[]>returnResults) : returnResults.length > 0;
+  return indexing
+    ? reduceIndexing(<number[]>returnResults)
+    : returnResults.length > 0;
 }
 
 export function shouldReturnRecursion({
@@ -62,7 +64,7 @@ export function shouldReturnRecursion({
   searchNode: ParsedPart;
   dateFormat?: DateFormat;
   indexing?: boolean;
-  }): number | boolean | NOT_Exclusion | NOT_Pass {
+}): number | boolean | NOT_Exclusion | NOT_Pass {
   if (searchNode.mode === 'OR')
     return orMode({ stringifiedObject, searchNode, indexing });
 

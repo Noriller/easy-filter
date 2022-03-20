@@ -79,6 +79,18 @@ describe('EasyFilter', () => {
       expect(efta.search('aliasesWithMultipleValues:3')).toHaveLength(10);
     });
   });
+
+  describe('case sensitivity', () => {
+    it('should search while ignoring case sensitivity', () => {
+      const result = ef.search('BULBA');
+      expect(result).toHaveLength(1);
+    });
+
+    it('should search tags ignoring case sensitivity', () => {
+      const result = ef.search('ID:10');
+      expect(result).toHaveLength(1);
+    });
+  });
 });
 
 describe('EasyFilterIssues', () => {
@@ -99,7 +111,7 @@ describe('EasyFilterIssues', () => {
       const ef_index = EasyFilter(poke10, {
         filterOptions: {
           indexing: true,
-        }
+        },
       });
 
       const result = ef_index.search('not(id:2)');
@@ -111,7 +123,7 @@ describe('EasyFilterIssues', () => {
       const ef_index = EasyFilter(poke10, {
         filterOptions: {
           indexing: true,
-        }
+        },
       });
 
       const result = ef_index.search('not(id:2) id:3');
@@ -119,4 +131,3 @@ describe('EasyFilterIssues', () => {
     });
   });
 });
-
