@@ -30,6 +30,11 @@ describe('EasyFilter', () => {
     expect(result).toHaveLength(3);
   });
 
+  it('should work while typing', () => {
+    const result = ef.search('not(');
+    expect(result).toHaveLength(0);
+  });
+
   describe('using options', () => {
     it('should search using limit', () => {
       const result = ef.search('invalidTag:null options(limit:2)');
