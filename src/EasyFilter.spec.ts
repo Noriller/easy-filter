@@ -134,5 +134,11 @@ describe('EasyFilterIssues', () => {
       const result = ef_index.search('not(id:2) id:3');
       expect(result).toHaveLength(1);
     });
+
+    it('should search using a tag inside quotes', () => {
+      const result = ef.search("'id:2'");
+      expect(result).not.toHaveLength(0);
+      expect(result).toHaveLength(1);
+    });
   });
 });
