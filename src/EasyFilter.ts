@@ -49,7 +49,7 @@ export default function EasyFilter(
   return {
     /**
      * Call `search` with your query string to filter the source array.
-     * @param string - Your query string.
+     * @param {string} string - Your query string.
      * @returns the filtered source array.
      *
      * @remarks
@@ -57,7 +57,7 @@ export default function EasyFilter(
      *
      * @see README for everything that can be passed in the query string.
      */
-    search: (string) => search(string, source, parser),
+    search: (string: string) => search(string, source, parser),
   };
 }
 
