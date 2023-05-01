@@ -22,7 +22,7 @@
     "packPublish:publish": "yarn packPublish && yarn publish ./out/*.tgz"
   },
   "dependencies": {
-    "@noriller/easy-filter-parser": "^1.0.0"
+    "@noriller/easy-filter-parser": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
